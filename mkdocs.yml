@@ -7,12 +7,18 @@ nav:
       - Cenário Atual do Cliente e Negócio: base/scenario.md
       - Solução Proposta: base/solution.md
       - Estratégias de Engenharia de Software: base/strategy.md
+      - Engenharia de Requisitos: base/engineer.md
       - Cronograma e Entregas: base/schedule.md
       - Interação entre Equipe e Cliente: base/interaction.md
       - Lições Aprendidas: base/learning.md
       - Referências Bibliográficas: base/references.md
+  - Requisitos:
+      - Product Backlog Building: requirements/pbb.md
+      - Priorização e MVP: requirements/moscow.md
+      - DoR e DoD: requirements/dor-dod.md
   - Entregas por Unidade:
       - Unidade 1: delivery/unit-1.md
+      - Unidade 2: delivery/unit-2.md
 
 extra_css:
   - assets/styles.css
