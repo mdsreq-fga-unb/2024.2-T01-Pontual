@@ -1,6 +1,6 @@
-# 6. Lições Aprendidas
+# 7. Lições Aprendidas
 
-**6.1 Unidade 1**
+**7.1 Unidade 1**
 
 Durante a fase inicial de desenvolvimento do projeto Pontual, uma série de desafios e aprendizados importantes emergiram, influenciando diretamente as decisões para as etapas subsequentes:
 
@@ -15,6 +15,17 @@ Na fase de levantamento de requisitos, a equipe percebeu a necessidade de defini
 
 **Configuração do Ambiente no GitHub Pages:**
 Durante a primeira parte do projeto foi apreendida a configuração do ambiente de repositório e integração contínua no GitHub Pages. Isso, visto a necessidade de disponibilizar a documentação em um ambiente adequado, e para isso foi utilizado o MkDocs.
+
+**7.2 Unidade 2**
+
+**Processos da Engenharia de Requisitos:**
+Na segunda unidade, a equipe percebeu a importância de uma abordagem estruturada para a Engenharia de Requisitos. A definição de técnicas e atividades específicas para cada fase do RAD foi essencial para garantir a qualidade e rastreabilidade dos requisitos, evitando retrabalhos e garantindo a satisfação do cliente.
+
+**Estudo Aprofundado de Técnicas:**
+A análise detalhada de técnicas de ER, como entrevistas com stakeholders, análise de concorrentes e prototipagem, permitiu uma compreensão mais clara das necessidades do cliente e dos requisitos do sistema. A aplicação dessas técnicas em conjunto com o RAD foi fundamental para garantir a eficácia do processo de desenvolvimento.
+
+**Validação Contínua com o Cliente:**
+A interação constante com o cliente, por meio de mensagens e feedback, foi um dos pontos-chave. A validação das ideias iniciais por meio da prototipagem está sendo essencial para garantir que o produto final atenda às expectativas e necessidades do cliente.
 
 ---
 
