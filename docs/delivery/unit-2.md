@@ -3,10 +3,10 @@
 Para a segunda unidade, foi definido a partir do plano de ensino, os seguintes tópicos:
 
 - Visão de Produto e Projeto
-    - [Processo de ER (Técnicas)](/base/engineer)
-    - [Backlog](/requirements/pbb)
-    - [Priorização e MVP](/requirements/moscow)
-    - [DoR e DoD](/requirements/dor-dod)
+    - [Processo de ER (Técnicas)](https://mdsreq-fga-unb.github.io/2024.2-T01-Pontual/base/engineer/)
+    - [Backlog](https://mdsreq-fga-unb.github.io/2024.2-T01-Pontual/requirements/pbb)
+    - [Priorização e MVP](https://mdsreq-fga-unb.github.io/2024.2-T01-Pontual//requirements/moscow)
+    - [DoR e DoD](https://mdsreq-fga-unb.github.io/2024.2-T01-Pontual/requirements/dor-dod)
 - Site do Projeto (GitPages)
 - Vídeo de apresentação das entregas
 

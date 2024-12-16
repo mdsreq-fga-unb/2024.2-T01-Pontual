@@ -5,7 +5,7 @@
 A equipe definiu que o método principal de priorização do Product Backlog seria o MoSCoW. A partir disso, foi realizada a priorização dos itens do Product Backlog, conforme a tabela a seguir.
 
 <div align="center">
-    <img style="border-radius: 5px;" src="/assets/moscow.png" alt="Tabela do Product Backlog Building (PBB)" />
+    <img style="border-radius: 5px;" src="https://raw.githubusercontent.com/mdsreq-fga-unb/2024.2-T01-Pontual/refs/heads/main/docs/assets/moscow.png" alt="Tabela de Priorização no Método MoSCoW" />
 </div>
 <div align="right">
     <a target="_blank" href="https://www.figma.com/board/v3kWX9MwLe90r7YMZYg2bv/PBB---Pontual?node-id=0-1&t=V2qqCBaPOzMJcBHK-1">

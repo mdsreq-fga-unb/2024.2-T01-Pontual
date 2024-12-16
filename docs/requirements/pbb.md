@@ -4,7 +4,7 @@ A partir da definição da técnica do PBB como sendo a principal na Engenharia 
 
 <div align="center">
     <a target="_blank" href="https://www.figma.com/board/v3kWX9MwLe90r7YMZYg2bv/PBB---Pontual?node-id=0-1&t=V2qqCBaPOzMJcBHK-1">
-        <img style="border-radius: 15px;" src="/assets/pbb.png" alt="Tabela do Product Backlog Building (PBB)" />
+        <img style="border-radius: 15px;" src="https://raw.githubusercontent.com/mdsreq-fga-unb/2024.2-T01-Pontual/refs/heads/main/docs/assets/pbb.png" alt="Tabela do Product Backlog Building (PBB)" />
     </a>
 </div>
 <div align="right">
