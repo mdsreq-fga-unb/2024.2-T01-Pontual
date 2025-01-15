@@ -310,4 +310,51 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related (specific to frontend)
+app/frontend/doc/api/
+app/frontend/ios/Flutter/.last_build_id
+app/frontend/.dart_tool/
+app/frontend/.flutter-plugins
+app/frontend/.flutter-plugins-dependencies
+app/frontend/.pub-cache/
+app/frontend/.pub/
+app/frontend/build/
+
+# Symbolication related
+app/frontend/app.*.symbols
+
+# Obfuscation related
+app/frontend/app.*.map.json
+
+# Android Studio will place build artifacts here
+app/frontend/android/app/debug
+app/frontend/android/app/profile
+app/frontend/android/app/release
+
+
 # End of https://www.toptal.com/developers/gitignore/api/python,node
