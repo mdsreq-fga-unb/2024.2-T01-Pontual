@@ -18,15 +18,22 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFFF08484), // Cor do botão
+          backgroundColor: Color(0xFFF08484),
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
-        child: Text(text,
-            style: TextStyle(
-              fontFamily: 'ArimoHebrewSubset',
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            )),
+        child: Text(
+          text,
+          style: TextStyle(
+            fontFamily: 'ArimoHebrewSubset',
+            fontSize: 15,
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }
