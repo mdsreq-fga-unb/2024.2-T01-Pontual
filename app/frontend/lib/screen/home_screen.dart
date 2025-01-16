@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/routes/app_routes.dart';
 import '../widgets/custom_button.dart';
-import '../widgets/custom_imput.dart';
+import '../widgets/custom_input.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -118,8 +119,8 @@ class HomeScreen extends StatelessWidget {
                   CustomButton(
                     text: 'Login',
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context, '/about'); //APENAS PARA TESTE
+                      Navigator.of(context)
+                          .pushNamed(AppRoutes.RS); //APENAS PARA TESTE
                     },
                   ),
                 ],
