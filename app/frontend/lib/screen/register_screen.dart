@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/routes/app_routes.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_input.dart';
 
@@ -117,8 +118,8 @@ class RegisterScreen extends StatelessWidget {
                   CustomButton(
                     text: 'Cadastrar',
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context, '/about'); //APENAS PARA TESTE
+                      Navigator.of(context)
+                          .pushNamed(AppRoutes.UH); //APENAS PARA TESTE
                     },
                   ),
                 ],
