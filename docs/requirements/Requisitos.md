@@ -30,3 +30,10 @@
 |RNF06 | Segurança| O sistema deve garantir a confiabilidade no armazenamento das informações, ou seja, efetuar backups regulares para evitar perdas em caso de desastre.|
 |RNF07 | Reusabilidade| Componentes de software responsáveis por executar funções específicas, como cálculos de horas trabalhadas ou controle de intervalos, devem ser projetados de forma modular, permitindo sua reutilização em diferentes partes do sistema de marcação de ponto.|
 |RNF08 | Confiabilidade| O sistema deve garantir a segurança dos dados dos funcionários, protegendo informações sensíveis, como as senhas de acesso.|
+
+
+## Histórico de Versão
+
+| Data       | Versão | Descrição                                                | Autor                      | Revisores |
+| ---------- | ------ | -------------------------------------------------------- | -------------------------- | ---------------------------------------- |
+| 18/01/2025 | 0.1    | Criação da página | Daniela Alarcão|  |

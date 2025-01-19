@@ -48,12 +48,6 @@
 2. A requisição tem resposta de até 1s.
 3. O requisito foi validado utilizando testes automatizados.
 
-**Validação dos Stakeholders**
-
-1. Foi feita uma reunião de validação com a cliente para aprovação.
-2. O cliente validou o requisito e está satisfeito com o resultado.
-3. O feedback do cliente foi incorporado.
-
 **Integração e Homologação Concluída**
 
 1. O requisito foi integrado no ambiente de homologação.
@@ -66,3 +60,5 @@
 | Data       | Versão | Descrição                                                | Autor                      | Revisores |
 | ---------- | ------ | -------------------------------------------------------- | -------------------------- | ---------------------------------------- |
 | 16/12/2024 | 0.1    | Criação do checklist inicial para DoR e DoD | Caio Lamego, Daniela Alarcão e Mateus Vieira |  |
+| 18/01/2025 | 0.2    | Atualização da página | Daniela Alarcão |  |
+

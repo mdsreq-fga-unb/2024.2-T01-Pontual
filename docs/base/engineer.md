@@ -46,8 +46,13 @@
 
 ---
 
+## 📚 Referências
+
+- **Johanna Rothman (2022). How and When to Use Timeboxes, Iterations, and Sprints to be Most Effective.** Acesso em: 16 de janeiro de 2025.
+
 ## Histórico de Versão
 
 | Data       | Versão | Descrição                               | Autor                                   | Revisores |
 | ---------- | ------ | --------------------------------------- | --------------------------------------- | ---------------------------|
-| 15/12/2024 | 1.0    | Definição das técnicas da Engenharia de Requisitos | Caio Lamego e Mateus Vieira | --- |
+| 15/12/2024 | 0.1    | Definição das técnicas da Engenharia de Requisitos | Caio Lamego e Mateus Vieira | --- |
+| 18/01/2025 | 0.2    | Reformulação de conceitos | Daniela Alarcão | --- |
