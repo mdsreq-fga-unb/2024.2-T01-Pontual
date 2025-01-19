@@ -29,7 +29,7 @@
 
 - **MoSCoW**: Ajuda a priorizar, organizar e manter os requisitos alinhados ao progresso iterativo e colaborativo característico do RAD. Essa técnica promove a organização dos requisitos propostos pela CCAA em categorias, dessa forma a prática alinha as propriedades e permite que a equipe de desenvolvimento foque nos requisitos mais críticos para cada iteração.
 - **Product Backlog Building (PBB)**: Organiza os requisitos em um backlog estruturado, o que permite uma adaptação diante do progresso do desenvolvimento.
-- **Timeboxing**: Essa técnica permite uma organização, principalmente para a equipe de desenvolvimento, para definir períodos fixos para atividades ou ciclos de desenvolvimento, mantendo o ritmo e tornando viável a entrega no prazo, se seguido o planejamento da técnica.
+- **Timeboxing**: Técnica de produtividade que consiste em definir um período de tempo fixo para a execução de uma tarefa ou conjunto de atividades. Ao final desse período, o trabalho é considerado concluído. O objetivo é garantir foco, evitar procrastinação e promover um fluxo de trabalho contínuo. 
 
 **4.2 Engenharia de Requisitos e o RAD**
 

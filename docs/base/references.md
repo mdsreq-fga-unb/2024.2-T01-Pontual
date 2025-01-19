@@ -10,6 +10,8 @@
 
 [Kissflow] Team Kissflow (2024). What is Rapid Application Development (RAD)? An Ultimate Guide for 2024. Link: <https://kissflow.com/application-development/rad/rapid-application-development/> Acesso: 22 de novembro de 2024.
 
+[Johanna] Johanna Rothman (2022). How and When to Use Timeboxes, Iterations, and Sprints to be Most Effective. Link: <https://www.jrothman.com/mpd/2022/04/how-and-when-to-use-timeboxes-iterations-and-sprints-to-be-most-effective/> Acesso: 16 de janeiro de 2025.
+
 ---
 
 ## Histórico de Versão
