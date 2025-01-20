@@ -17,6 +17,9 @@ nav:
       - Priorização e MVP: requirements/moscow.md
       - DoR e DoD: requirements/dor-dod.md
       - Requisitos do Projeto: requirements/Requisitos.md
+  - Atividades:
+      - PBB TechFix: activities/pbb-techfix.md
+      - USM EduConnect: activities/usm-educonnect.md
   - Entregas por Unidade:
       - Unidade 1: delivery/unit-1.md
       - Unidade 2: delivery/unit-2.md
