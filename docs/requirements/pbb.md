@@ -2,29 +2,48 @@
 
 A partir da definição da técnica do PBB como sendo a principal na Engenharia de Requisitos do projeto para a atividade de **Organização e Atualização**, este documento mostra a aplicação do método dentro do contexto do projeto. Isso, partindo dos estudos realizados previamente sobre o tema e das conversas as quais a equipe teve com a cliente.
 
-<div align="center">
-    <a target="_blank" href="https://www.figma.com/board/v3kWX9MwLe90r7YMZYg2bv/PBB---Pontual?node-id=0-1&t=V2qqCBaPOzMJcBHK-1">
-        <img style="border-radius: 15px;" src="https://raw.githubusercontent.com/mdsreq-fga-unb/2024.2-T01-Pontual/refs/heads/main/docs/assets/pbb.png" alt="Tabela do Product Backlog Building (PBB)" />
-    </a>
-</div>
+<iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVLr4RHYA=/?moveToViewport=-971,-522,1788,1657&embedId=298062954251" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
+
 <div align="right">
-    <a target="_blank" href="https://www.figma.com/board/v3kWX9MwLe90r7YMZYg2bv/PBB---Pontual?node-id=0-1&t=V2qqCBaPOzMJcBHK-1">
+    <a target="_blank" href="https://miro.com/app/board/uXjVLr4RHYA=/?share_link_id=770429969633">
         Link
     </a>
 </div>
 
 **1.1 Product Backlog Items (PBIs):**
 
-1. Realizar cadastro de usuário
-2. Dividir usuários entre funcionário e gestor
-3. Realizar cálculo de horas extra e de atraso
-4. Gerar relatório do cálculo de horas em PDF
-5. Realizar a marcação de ponto
-6. Realizar cálculo de horas totais
-7. Permitir gestores criar lembretes de atraso para os funcionários
-8. Gerar notificação, para o gestor, na marcação de aula VIP
-9. Permitir assinatura digital
-10. Acessar histórico de cada funcionário
+1. Integrar API de assinatura digital
+2. Efetuar autenticação do professor na API
+3. Realizar assinatura do professor
+4. Realizar busca das marcações de ponto
+5. Efetuar filtro por data do histórico
+6. Realizar coloração por status
+7. Efetuar ponto de aula fixa
+8. Criar ponto de aula VIP e/ou de Reposição
+9. Registrar atraso de aula fixa
+10. Criar formulário de cadastro de professores
+11. Validar campos obrigatórios no cadastro
+12. Criar conta de professor
+13. Efetuar login do professor
+14. Efetuar cadastro das informações de aula
+15. Realizar seleção de professor
+16. Exibir tabela com marcação dos professores
+17. Implementar filtros por data
+18. Permitir visualização de marcações anteriores
+19. Exibir status das marcações implementar paginação para grande volume de dados
+20. Adicionar busca por nome do professor
+21. Identificar professores atrasados
+22. Permitir envio de notificação
+23. Exibir status de notificação
+24. Exibir lista de professores registrados
+25. Criar filtro para professores inativos
+26. Permitir ativação de um professor
+27. Criar filtro para professores ativos
+28. Selecionar professor ou todos os professores
+29. Definir período do relatório
+30. Calcular horas totais trabalhadas
+31. Contabilizar faltas
+32. Exportar relatório em PDF
 
 ---
 
@@ -39,3 +58,4 @@ A partir da definição da técnica do PBB como sendo a principal na Engenharia 
 Data       | Versão | Descrição                                                | Autor                      | Revisores
 ---------- | ------ | -------------------------------------------------------- | -------------------------- | ----------------------------------------
 15/12/2024 | 0.1    | Criação da Tabela de PBB seguindo os requisitos | Mateus Vieira | Caio Lamego, Daniela Alarcão, João Lucas e Pedro Gondim
+20/01/2024 | 0.2    | Atualização da tabela do PBB especificando melhor as atividades | Mateus Vieira | ---
