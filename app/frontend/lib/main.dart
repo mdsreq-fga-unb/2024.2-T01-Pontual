@@ -5,6 +5,7 @@ import 'package:frontend/screen/user_home.dart';
 import 'package:frontend/utils/theme.dart';
 import 'screen/home_screen.dart';
 import 'screen/register_screen.dart';
+import 'screen/regist_home.dart';
 // import 'screen/about_screen.dart';
 
 void main() {
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
       routes: {
         AppRoutes.HS: (context) => HomeScreen(),
         AppRoutes.RS: (context) => RegisterScreen(),
-        AppRoutes.UH: (context) => UserHome()
+        AppRoutes.UH: (context) => UserHome(),
+        AppRoutes.RH: (context) => RegistHome()
       },
     );
   }
