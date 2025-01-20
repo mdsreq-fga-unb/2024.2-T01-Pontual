@@ -73,17 +73,28 @@ class Status(models.Model):
         max_length=9, choices=NOTES
     )
     expected = ArrayField(
-        models.TimeField(blank=False, null=False),
+        models.DateTimeField(blank=False, null=False),
         blank=False, null=False, max_length=2
     )
     register = ArrayField(
-        models.TimeField(blank=False, null=False),
+        models.DateTimeField(blank=False, null=False),
         blank=False, null=False, max_length=2
     )
     classy = models.ForeignKey(
         Class, on_delete=models.CASCADE,
         blank=True, null=True
     )
+
+    def clean(self):
+        super().clean()
+        if len(self.expected) != len(self.register):
+            raise ValidationError(
+                _("The 'expected' and 'register' arrays must have the same length.")
+            )
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
 
 
 class Message(models.Model):
