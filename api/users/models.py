@@ -12,7 +12,18 @@ class User(AbstractUser):
 
     uuid = models.UUIDField(default=uuid4, primary_key=True)
     name = models.CharField(blank=False, null=False, max_length=64)
-    email = models.EmailField(_('email address'), unique=True, blank=False, null=False)
+    email = models.EmailField(
+        _('email address'),
+        unique=True, blank=False, null=False
+    )
+    is_active = models.BooleanField(
+        _("active"),
+        default=False,
+        help_text=_(
+            "Designates whether this user should be treated as active. "
+            "Unselect this instead of deleting accounts."
+        ),
+    )
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
