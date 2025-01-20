@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("DJANGO_SECRET_KEY")
 
-APPEND_SLASH = False
+APPEND_SLASH = True
 
 
 # Application definition
@@ -56,12 +56,27 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication'
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
     ],
     'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer'
     ]
+}
+
+
+# SimpleJWT
+
+ACCESS_TOKEN_LIFETIME = timedelta(days=1)
+REFRESH_TOKEN_LIFETIME = timedelta(days=30)
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': ACCESS_TOKEN_LIFETIME,
+    'REFRESH_TOKEN_LIFETIME': REFRESH_TOKEN_LIFETIME,
+    'REFRESH_TOKEN_SECURE': True,
+    'ROTATE_REFRESH_TOKENS': True,
+
+    'USER_ID_FIELD': 'uuid',
+    'USER_ID_CLAIM': 'user_uuid',
 }
 
 MIDDLEWARE = [

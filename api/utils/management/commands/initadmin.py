@@ -10,6 +10,9 @@ class Command(BaseCommand):
         if not len(User.objects.all().filter(email=email)):
             password = config("ADMIN_PASS")
             print(f'Conta do usuário {email} será criada!')
-            User.objects.create_superuser(email=email, password=password)
+            User.objects.create_superuser(
+                email=email, password=password,
+                is_active=True
+            )
         else:
             print('Conta de administrador já existe!')

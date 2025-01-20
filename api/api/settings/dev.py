@@ -1,3 +1,4 @@
+from corsheaders.defaults import default_headers
 from .base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -15,6 +16,10 @@ ALLOWED_HOSTS = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = [
+    *default_headers,
+    'Device-Type'
+]
 
 
 # Database
