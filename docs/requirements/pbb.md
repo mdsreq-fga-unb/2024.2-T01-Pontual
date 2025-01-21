@@ -58,4 +58,4 @@ A partir da definição da técnica do PBB como sendo a principal na Engenharia 
 Data       | Versão | Descrição                                                | Autor                      | Revisores
 ---------- | ------ | -------------------------------------------------------- | -------------------------- | ----------------------------------------
 15/12/2024 | 0.1    | Criação da Tabela de PBB seguindo os requisitos | Mateus Vieira | Caio Lamego, Daniela Alarcão, João Lucas e Pedro Gondim
-20/01/2024 | 0.2    | Atualização da tabela do PBB especificando melhor as atividades | Mateus Vieira | ---
+20/01/2025 | 0.2    | Atualização da tabela do PBB especificando melhor as atividades | Mateus Vieira | ---

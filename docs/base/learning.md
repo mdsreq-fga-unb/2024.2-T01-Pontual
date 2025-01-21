@@ -27,6 +27,14 @@ A análise detalhada de técnicas de ER, como entrevistas com stakeholders, aná
 **Validação Contínua com o Cliente:**
 A interação constante com o cliente, por meio de mensagens e feedback, foi um dos pontos-chave. A validação das ideias iniciais por meio da prototipagem está sendo essencial para garantir que o produto final atenda às expectativas e necessidades do cliente.
 
+**7.3 Unidade 3**
+
+**Estudo de Caso PBB:**
+Durante o estudo de caso do PBB, a equipe teve a oportunidade de aplicar os conceitos de Engenharia de Requisitos na prática. A análise dos requisitos do sistema e a definição de um backlog de produto foram essenciais para garantir a qualidade e a rastreabilidade dos requisitos, bem como para priorizar as funcionalidades mais críticas para o cliente.
+
+**Estudo de Caso USM:**
+No estudo de caso do USM, a equipe teve a oportunidade de aprofundar seus conhecimentos em Engenharia de Requisitos e aplicar técnicas específicas para a elicitação e análise de requisitos. A definição de um backlog de produto e a priorização das funcionalidades foram fundamentais para garantir a eficácia do processo de desenvolvimento e a satisfação do cliente.
+
 ---
 
 ## Histórico de Versão
@@ -34,3 +42,4 @@ A interação constante com o cliente, por meio de mensagens e feedback, foi um 
 Data       | Versão | Descrição                               | Autor                                   | Revisores
 ---------- | ------ | --------------------------------------- | --------------------------------------- | ---------------------------
 09/11/2024 | 1.0    | Descrição dos aprendizados da Unidade 1 | Mateus Vieira, João Lucas, Pedro Gondim | Caio Lamego, Daniela Alarcão
+20/01/2025 | 1.0    | Descrição dos aprendizados da Unidade 3 | Mateus Vieira  | Caio Lamego e Pedro Gondim

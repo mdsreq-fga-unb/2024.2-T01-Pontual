@@ -23,6 +23,7 @@ nav:
   - Entregas por Unidade:
       - Unidade 1: delivery/unit-1.md
       - Unidade 2: delivery/unit-2.md
+      - Unidade 3: delivery/unit-3.md
 
 extra_css:
   - assets/styles.css

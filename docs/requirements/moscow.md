@@ -96,4 +96,4 @@ Seguindo a lógica do MoSCoW, o MVP do projeto será composto pelos items que fo
 | ---------- | ------ | -------------------------------------------------------- | -------------------------- | ---------------------------------------- |
 | 07/12/2024 | 0.1    | Priorização do Backlog utilizando o MoSCoW | Mateus Vieira e Caio Lamego | Daniela Alarcão, João Lucas e Pedro Gondim |
 | 08/12/2024 | 0.2    | Realização da Escala Tradicional de Priorização | Caio Lamego, Daniela Alarcão, João Lucas, Mateus Vieira e Pedro Gondim | |
-| 20/01/2024 | 0.3    | Atualização do MoSCoW e Exclusão da tabela tradicional de priorização | Mateus Vieira | |
+| 20/01/2025 | 0.3    | Atualização do MoSCoW e Exclusão da tabela tradicional de priorização | Mateus Vieira | |
