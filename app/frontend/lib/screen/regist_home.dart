@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/custom_appbar.dart';
+import 'package:frontend/widgets/dateCard.dart';
 
 void main() {
   runApp(RegistHome());
@@ -53,16 +54,7 @@ class HomePage extends StatelessWidget {
             Text('Datas',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _dateCard('Seg', '2', false),
-                _dateCard('Ter', '3', false),
-                _dateCard('Qua', '4', true),
-                _dateCard('Qui', '5', false),
-                _dateCard('Sex', '6', false),
-              ],
-            ),
+            DateCardComponent(),
             SizedBox(height: 16),
             Text('Registro de Ponto',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
