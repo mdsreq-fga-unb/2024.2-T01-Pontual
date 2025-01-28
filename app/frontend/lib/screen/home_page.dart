@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/routes/app_routes.dart';
 import 'package:frontend/widgets/custom_appbar.dart';
 import 'package:frontend/widgets/dateCard.dart';
+import 'package:frontend/widgets/timeCard.dart';
 import 'package:frontend/widgets/usebar.dart';
 
 class HomePage extends StatelessWidget {
@@ -24,8 +25,20 @@ class HomePage extends StatelessWidget {
             Text('Registro de Ponto',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             SizedBox(height: 8),
-            _timeCard('Turma 1', '08:00 - 09:10', true, 'Registro em 08:05'),
-            _timeCard('Turma 2', '13:00 - 14:15', false, 'Aguardando Registro'),
+            TimeCardWidget(
+              title: 'Turma 2',
+              time: '19:45 - 21:00',
+              isRegistered: false,
+              status: 'Aguardando Registro',
+              endTime: '21:00', // Aqui está o valor do horário de término
+            ),
+            TimeCardWidget(
+              title: 'Turma 2',
+              time: '21:00 - 22:15',
+              isRegistered: false,
+              status: 'Aguardando Registro',
+              endTime: '22:15', // Aqui está o valor do horário de término
+            ),
             SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -36,7 +49,13 @@ class HomePage extends StatelessWidget {
                 TextButton(onPressed: () {}, child: Text('Editar')),
               ],
             ),
-            _timeCard('VIP 1', '07:00 - 08:00', true, 'Registro em 07:05'),
+            TimeCardWidget(
+              title: 'Turma 2',
+              time: '13:00 - 14:15',
+              isRegistered: false,
+              status: 'Aguardando Registro',
+              endTime: '14:15', // Aqui está o valor do horário de término
+            ),
           ],
         ),
       ),
@@ -50,47 +69,6 @@ class HomePage extends StatelessWidget {
         onProfilePressed: () {
           Navigator.of(context).pushNamed(AppRoutes.UH);
         },
-      ),
-    );
-  }
-
-  Widget _timeCard(
-      String title, String time, bool isRegistered, String status) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      padding: EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-              SizedBox(height: 4),
-              Text(time,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              SizedBox(height: 4),
-              Text(status, style: TextStyle(fontSize: 14, color: Colors.grey)),
-            ],
-          ),
-          Icon(
-            isRegistered ? Icons.check_circle : Icons.warning_amber_rounded,
-            color: isRegistered ? Colors.green : Colors.amber,
-            size: 32,
-          ),
-        ],
       ),
     );
   }
