@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/custom_appbar.dart';
-import 'package:frontend/widgets/usebar.dart';
+// import 'package:frontend/widgets/usebar.dart';
 // import '../widgets/custom_button.dart';
 // import '../widgets/custom_input.dart';
 
@@ -24,7 +24,7 @@ class UserHome extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: UseBar(),
+      // bottomNavigationBar: UseBar(),
     );
   }
 }

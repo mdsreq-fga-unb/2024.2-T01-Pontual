@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:frontend/routes/app_routes.dart';
 import 'package:frontend/screen/user_home.dart';
 import 'package:frontend/utils/theme.dart';
-import 'screen/home_screen.dart';
+import 'screen/login_screen.dart';
 import 'screen/register_screen.dart';
-import 'screen/regist_home.dart';
+import 'screen/home_page.dart';
 // import 'screen/about_screen.dart';
 
 void main() {
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.HS: (context) => HomeScreen(),
         AppRoutes.RS: (context) => RegisterScreen(),
         AppRoutes.UH: (context) => UserHome(),
-        AppRoutes.RH: (context) => RegistHome()
+        AppRoutes.HP: (context) => HomePage()
       },
     );
   }

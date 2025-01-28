@@ -119,7 +119,7 @@ class RegisterScreen extends StatelessWidget {
                     text: 'Cadastrar',
                     onPressed: () {
                       Navigator.of(context)
-                          .pushNamed(AppRoutes.UH); //APENAS PARA TESTE
+                          .pushNamed(AppRoutes.HP); //APENAS PARA TESTE
                     },
                   ),
                 ],
