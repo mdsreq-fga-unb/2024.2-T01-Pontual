@@ -17,7 +17,7 @@ class UseBar extends StatelessWidget {
     return Container(
       height: 70, // Altura ajustada
       decoration: BoxDecoration(
-        color: Colors.red.shade300,
+        color: Color(0xFFF08484),
       ),
       child: Stack(
         alignment: Alignment.center,
@@ -55,7 +55,7 @@ class UseBar extends StatelessWidget {
           Positioned(
             top: -25, // Ajuste para sair da navbar
             child: FloatingActionButton(
-              backgroundColor: Colors.red.shade400,
+              backgroundColor: Color(0xFFF08484),
               onPressed: onAddPressed,
               shape: const CircleBorder(),
               child: const Icon(Icons.add, size: 32, color: Colors.white),

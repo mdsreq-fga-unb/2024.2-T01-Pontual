@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/routes/app_routes.dart';
 import 'package:frontend/widgets/custom_appbar.dart';
 import 'package:frontend/widgets/dateCard.dart';
 import 'package:frontend/widgets/usebar.dart';
@@ -44,10 +45,10 @@ class HomePage extends StatelessWidget {
           print('Adicionar pressionado');
         },
         onHomePressed: () {
-          print('Início pressionado');
+          Navigator.of(context).pushNamed(AppRoutes.HP);
         },
         onProfilePressed: () {
-          print('Perfil pressionado');
+          Navigator.of(context).pushNamed(AppRoutes.UH);
         },
       ),
     );
