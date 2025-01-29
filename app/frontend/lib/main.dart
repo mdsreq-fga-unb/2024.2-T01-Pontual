@@ -1,7 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/routes/app_routes.dart';
-import 'package:frontend/screen/user_home.dart';
+import 'package:frontend/screen/profile_screen.dart';
 import 'package:frontend/utils/theme.dart';
 import 'screen/login_screen.dart';
 import 'screen/register_screen.dart';
@@ -24,9 +24,9 @@ class MyApp extends StatelessWidget {
       theme: appTheme,
       initialRoute: '/',
       routes: {
-        AppRoutes.HS: (context) => HomeScreen(),
+        AppRoutes.LS: (context) => LoginScreen(),
         AppRoutes.RS: (context) => RegisterScreen(),
-        AppRoutes.UH: (context) => UserHome(),
+        AppRoutes.PS: (context) => ProfileScreen(),
         AppRoutes.HP: (context) => HomePage()
       },
     );

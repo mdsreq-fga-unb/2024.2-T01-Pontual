@@ -4,7 +4,7 @@ import '../widgets/custom_button.dart';
 import '../widgets/custom_input.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomeScreen extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

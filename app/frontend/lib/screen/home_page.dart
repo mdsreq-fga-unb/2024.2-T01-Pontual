@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Color(0XFFEDEDED),
       appBar: CustomAppBar(),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -60,14 +60,11 @@ class HomePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: UseBar(
-        onAddPressed: () {
-          print('Adicionar pressionado');
-        },
         onHomePressed: () {
           Navigator.of(context).pushNamed(AppRoutes.HP);
         },
         onProfilePressed: () {
-          Navigator.of(context).pushNamed(AppRoutes.UH);
+          Navigator.of(context).pushNamed(AppRoutes.PS);
         },
       ),
     );
