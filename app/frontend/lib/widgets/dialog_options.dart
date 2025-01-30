@@ -5,6 +5,7 @@ class DialogOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Center(
       child: Container(
         width: 350,
@@ -25,26 +26,40 @@ class DialogOptions extends StatelessWidget {
                     color: Color(0xFF060606)),
               ),
             ),
-            Divider(color: Color(0xFFA5A5A5), thickness: 0.8),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                "Turma de Reposição",
-                style: TextStyle(
-                    color: Color(0xFF407FC8),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w100),
+            Container(
+              width: size.width,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: Color(0XFFA5A5A5), width: 0.8),
+                ),
+              ),
+              child: TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Turma de Reposição",
+                  style: TextStyle(
+                      color: Color(0xFF407FC8),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w100),
+                ),
               ),
             ),
-            Divider(color: Color(0xFFA5A5A5), thickness: 0.8),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                "Turma VIP",
-                style: TextStyle(
-                    color: Color(0xFF407FC8),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w100),
+            Container(
+              width: size.width,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: Color(0XFFA5A5A5), width: 0.8),
+                ),
+              ),
+              child: TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Turma de VIP",
+                  style: TextStyle(
+                      color: Color(0xFF407FC8),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w100),
+                ),
               ),
             ),
           ],
