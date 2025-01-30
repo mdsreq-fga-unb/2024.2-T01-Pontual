@@ -16,21 +16,7 @@ class UseBar extends StatelessWidget {
       context: context,
       barrierDismissible: true, // Permite fechar ao clicar fora
       builder: (BuildContext context) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          child: GestureDetector(
-            behavior:
-                HitTestBehavior.opaque, // Garante que o clique fora funcione
-            onTap: () =>
-                Navigator.of(context).pop(), // Fecha o diálogo ao clicar fora
-            child: Center(
-              child: GestureDetector(
-                onTap: () {}, // Impede que o clique dentro do diálogo feche ele
-                child: DialogOptions(),
-              ),
-            ),
-          ),
-        );
+        return DialogOptions();
       },
     );
   }
