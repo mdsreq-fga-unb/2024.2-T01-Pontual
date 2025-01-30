@@ -68,7 +68,9 @@ class DialogInputs extends StatelessWidget {
                             ),
                             Expanded(
                               child: TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
                                 child: Text(
                                   "Cancelar",
                                   style: TextStyle(
