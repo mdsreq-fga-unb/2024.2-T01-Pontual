@@ -62,7 +62,7 @@ class DialogOptions extends StatelessWidget {
                         ),
                       ),
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () => showDialogVip(context),
                         child: Text(
                           "Turma de VIP",
                           style: TextStyle(
