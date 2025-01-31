@@ -10,7 +10,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0XFFEDEDED),
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(
+        title: "Nome de Usuário",
+        page: "Bem Vindo",
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -18,7 +21,7 @@ class HomePage extends StatelessWidget {
           children: [
             SizedBox(height: 16),
             Text('Datas',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal)),
             SizedBox(height: 8),
             DateCardComponent(),
             SizedBox(height: 16),
