@@ -37,11 +37,9 @@ class ClassForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        days = cleaned_data.get('days', [])
-        times = cleaned_data.get('times', [])
-        if len(days) != len(times):
+        if len(cleaned_data.get('times', [])) < 2:
             raise forms.ValidationError(
-                "The number of days must match the number of times."
+                "The 'times' array must have 2."
             )
         return cleaned_data
 

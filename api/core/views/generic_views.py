@@ -5,8 +5,8 @@ from rest_framework import status, exceptions
 from rest_framework.permissions import IsAuthenticated
 from core.permissions import IsAdminUserNotSafe
 from django.shortcuts import get_object_or_404
-from .models import Class, Status
-from .serializers import ClassSerializer, StatusSerializer
+from ..models import Class, Status
+from ..serializers import ClassSerializer, StatusSerializer
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from users.models import User
 

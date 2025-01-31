@@ -36,9 +36,9 @@ class Class(models.Model):
 
     def clean(self):
         super().clean()
-        if len(self.days) != len(self.times):
+        if len(self.times) < 2:
             raise ValidationError(
-                _("The 'days' and 'times' arrays must have the same length.")
+                _("The 'times' arrays must have 2 elements")
             )
 
         if self.start > self.end:
