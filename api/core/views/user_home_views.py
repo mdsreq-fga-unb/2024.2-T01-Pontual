@@ -10,6 +10,7 @@ from ..serializers import ClassSerializer
 from ..permissions import IsAdminUserNotSafe
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from django.utils.timezone import make_aware
+from django.shortcuts import get_object_or_404
 
 
 class UserDailyClassesApiView(APIView):
@@ -96,13 +97,56 @@ class UserSpecialDailyClassesApiView(APIView):
 
         return Response(list(statuses), status=status.HTTP_200_OK)
     
+    # Para Marcar o Ponto da Aula Especial
     def patch(self, request, pk):
         try:
             status_instance = Status.objects.get(id=pk, user=request.user, kind__in=["VIP", "vip", "REP", "rep"])
         except Status.DoesNotExist:
             return Response({"detail": "Status não encontrado ou sem permissão."}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = SpecialClassSerializer(status_instance, data=request.data, partial=True)
+        register_data = request.data.get("register")
+
+        if not register_data:
+            return Response(
+                {"detail": "O campo 'register' é obrigatório para a atualização do ponto."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            register_datetime = parse_datetime(register_data)
+            if register_datetime is None:
+                raise ValueError
+        except ValueError:
+            return Response(
+                {"detail": "Formato de data de 'register' inválido. Use o formato ISO 8601."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if status_instance.register:
+            if len(status_instance.register) < 2:
+                status_instance.register.append(register_datetime)
+            else:
+                return Response(
+                    {"detail": "O campo 'register' já contém o número máximo de 2 datas."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        else:
+            status_instance.register = [register_datetime]
+
+        status_instance.save()
+
+        serializer = SpecialClassSerializer(status_instance)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # Para editar dados da aula especial
+    def put(self, request, pk):
+        try:
+            status_instance = Status.objects.get(id=pk, user=request.user, kind__in=["VIP", "vip", "REP", "rep"])
+        except Status.DoesNotExist:
+            return Response({"detail": "Status não encontrado ou sem permissão."}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = SpecialClassSerializer(status_instance, data=request.data, partial=False)
 
         if serializer.is_valid():
             serializer.save()
@@ -124,3 +168,82 @@ class UserSpecialDailyClassesApiView(APIView):
             {"detail": "Aula especial excluída com sucesso."},
             status=status.HTTP_204_NO_CONTENT,
         )
+
+
+class UserDailyStatusApiView(APIView):
+    def get(self, request):
+        data_selecionada = request.query_params.get("data")
+        id_classe = request.query_params.get("id_classe")
+
+        if not data_selecionada:
+            return Response(
+                {"detail": "A data deve ser informada no formato YYYY-MM-DD."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            data_selecionada = parse_date(data_selecionada)
+            if data_selecionada is None:
+                raise ValueError
+        except ValueError:
+            return Response(
+                {"detail": "Formato de data inválido. Use YYYY-MM-DD."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        statuses = Status.objects.filter(
+            expected__0=data_selecionada
+        )
+
+        if id_classe:
+            statuses = statuses.filter(classy_id=id_classe)
+
+        if not statuses.exists():
+            return Response(
+                {"detail": "Nenhum status encontrado para os filtros informados."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer = StatusSerializer(statuses, many=True)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def patch(self, request, pk):
+        status_instance = get_object_or_404(Status, pk=pk)
+
+        register_data = request.data.get("register")
+
+        if not register_data:
+            return Response(
+                {"detail": "O campo 'register' é obrigatório para a atualização do status."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            register_datetime = parse_datetime(register_data)
+            if register_datetime is None:
+                raise ValueError
+        except ValueError:
+            return Response(
+                {"detail": "Formato de data de 'register' inválido. Use o formato ISO 8601."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if status_instance.register:
+            if len(status_instance.register) < 2:
+                status_instance.register.append(register_datetime)
+            else:
+                return Response(
+                    {"detail": "O campo 'register' já contém o número máximo de 2 datas."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        else:
+            status_instance.register = [register_datetime]
+
+        status_instance.save()
+
+        serializer = StatusSerializer(status_instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+

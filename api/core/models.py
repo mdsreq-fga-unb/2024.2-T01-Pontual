@@ -3,7 +3,6 @@ from django.utils import timezone
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-
 from users.models import User
 
 

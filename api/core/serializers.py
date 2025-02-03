@@ -26,9 +26,30 @@ class SpecialClassSerializer(serializers.ModelSerializer):
         if len(value) != 2:
             raise serializers.ValidationError("O campo 'expected' deve conter exatamente duas datas.")
         return value
+    
+    def validate_register(self, value):
+        if len(value) > 2:
+            raise serializers.ValidationError("O campo 'register' deve conter no máximo duas datas.")
+        return value
 
     def validate(self, data):
-        # Verifica se 'user' está preenchido e 'classy' é nulo
+        user = data.get('user')
+        classy = data.get('classy')
+
+        if user is None or classy is not None:
+            raise serializers.ValidationError(
+                _("O campo 'user' deve estar preenchido, e o campo 'classy' deve ser nulo.")
+            )
+
+        return data
+
+
+class StatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Status
+        fields = '__all__'
+    
+    def validate(self, data):
         user = data.get('user')
         classy = data.get('classy')
 
@@ -43,12 +64,6 @@ class SpecialClassSerializer(serializers.ModelSerializer):
             )
 
         return data
-
-
-class StatusSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Status
-        fields = '__all__'
 
 
 class MessageSerializer(serializers.ModelSerializer):
