@@ -12,6 +12,39 @@ class ClassSerializer(serializers.ModelSerializer):
         extra_kwargs = {'user': {'write_only': True}}
 
 
+class SpecialClassSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Status
+        fields = '__all__'
+    
+    def validate_kind(self, value):
+        if value not in ['vip', 'rep']:
+            raise serializers.ValidationError("O campo 'kind' deve ser 'vip' ou 'rep'.")
+        return value
+
+    def validate_expected(self, value):
+        if len(value) != 2:
+            raise serializers.ValidationError("O campo 'expected' deve conter exatamente duas datas.")
+        return value
+
+    def validate(self, data):
+        # Verifica se 'user' está preenchido e 'classy' é nulo
+        user = data.get('user')
+        classy = data.get('classy')
+
+        if user and classy is not None:
+            raise serializers.ValidationError(
+                _("Quando o campo 'user' está preenchido, o campo 'classy' deve ser nulo.")
+            )
+
+        if not user and classy is None:
+            raise serializers.ValidationError(
+                _("Quando o campo 'classy' está preenchido, o campo 'user' deve ser preenchido.")
+            )
+
+        return data
+
+
 class StatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = Status

@@ -77,20 +77,28 @@ class Status(models.Model):
         blank=False, null=False, max_length=2
     )
     register = ArrayField(
-        models.DateTimeField(blank=False, null=False),
-        blank=False, null=False, max_length=2
+        models.DateTimeField(blank=True, null=True),
+        blank=True, null=True, max_length=2
     )
     classy = models.ForeignKey(
         Class, on_delete=models.CASCADE,
         blank=True, null=True
     )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        blank=True, null=True
+    )
 
     def clean(self):
         super().clean()
-        if len(self.expected) != len(self.register):
+
+        if (self.classy is None and self.user is None) or (self.classy is not None and self.user is not None):
             raise ValidationError(
-                _("The 'expected' and 'register' arrays must have the same length.")
+                _("Either 'classy' or 'user' must be set, but not both.")
             )
+        
+        if len(self.expected) != 2:
+            raise ValidationError(_("'expected' must contain two dates."))
 
     def save(self, *args, **kwargs):
         self.full_clean()
