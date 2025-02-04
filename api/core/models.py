@@ -3,32 +3,33 @@ from django.utils import timezone
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-
 from users.models import User
 
 
 class Class(models.Model):
     DAYS_OF_WEEK = [
-        ('monday', 'Monday'),
-        ('tuesday', 'Tuesday'),
-        ('wednesday', 'Wednesday'),
-        ('thursday', 'Thursday'),
-        ('friday', 'Friday'),
-        ('saturday', 'Saturday'),
-        ('sunday', 'Sunday'),
+        (0, 'Sunday'),
+        (1, 'Monday'),
+        (2, 'Tuesday'),
+        (3, 'Wednesday'),
+        (4, 'Thursday'),
+        (5, 'Friday'),
+        (6, 'Saturday')
     ]
 
     name = models.CharField(blank=False, null=False, max_length=32)
-    start = models.DateTimeField(blank=False, null=False, default=timezone.now)
-    end = models.DateTimeField(blank=False, null=False)
+
+    start_range = models.DateTimeField(
+        blank=False, null=False, default=timezone.now)
+    end_range = models.DateTimeField(blank=False, null=False)
+
     days = ArrayField(
-        models.CharField(max_length=10, choices=DAYS_OF_WEEK),
+        models.IntegerField(choices=DAYS_OF_WEEK),
         blank=False, null=False
     )
-    times = ArrayField(
-        models.TimeField(blank=False, null=False),
-        blank=False, null=False
-    )
+    start_time = models.TimeField(blank=False, null=False)
+    end_time = models.TimeField(blank=False, null=False)
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -36,14 +37,19 @@ class Class(models.Model):
 
     def clean(self):
         super().clean()
-        if len(self.days) != len(self.times):
+        if not self.end_range:
             raise ValidationError(
-                _("The 'days' and 'times' arrays must have the same length.")
+                _("The 'end' range must valid.")
             )
 
-        if self.start > self.end:
+        if self.start_range > self.end_range:
             raise ValidationError(
-                _("The 'start' date and time must be earlier than the 'end' date and time.")
+                _("The 'start' range must be earlier than the 'end' range.")
+            )
+
+        if self.start_time > self.end_time:
+            raise ValidationError(
+                _("The 'start' time must be earlier than the 'end' time.")
             )
 
     def save(self, *args, **kwargs):
@@ -78,19 +84,42 @@ class Status(models.Model):
     )
     register = ArrayField(
         models.DateTimeField(blank=False, null=False),
-        blank=False, null=False, max_length=2
+        blank=True, null=True, max_length=2
     )
     classy = models.ForeignKey(
         Class, on_delete=models.CASCADE,
+        related_name="status",
+        blank=True, null=True
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE,
         blank=True, null=True
     )
 
     def clean(self):
         super().clean()
-        if len(self.expected) != len(self.register):
+        if self.kind in ['std', 'rep'] and not self.classy:
             raise ValidationError(
-                _("The 'expected' and 'register' arrays must have the same length.")
+                _("'classy' must be set for this kind of status."))
+
+        if self.kind == 'vip' and not self.user:
+            raise ValidationError(
+                _("'user' must be set for this kind of status."))
+
+        if (self.classy is None and self.user is None) or (self.classy is not None and self.user is not None):
+            raise ValidationError(
+                _("Either 'classy' or 'user' must be set, but not both.")
             )
+
+        if not self.expected:
+            raise ValidationError(_("'expected' must contain two dates."))
+
+        if len(self.expected) > 2:
+            raise ValidationError(_("'expected' must contain two dates."))
+
+        if self.register and len(self.register) > 2:
+            raise ValidationError(
+                _("'register' must contain two dates or less."))
 
     def save(self, *args, **kwargs):
         self.full_clean()

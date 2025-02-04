@@ -5,17 +5,19 @@ from django.utils.dateparse import parse_time
 from datetime import datetime
 
 
-class ClassSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Class
-        fields = '__all__'
-        extra_kwargs = {'user': {'write_only': True}}
-
-
 class StatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = Status
         fields = '__all__'
+
+
+class ClassSerializer(serializers.ModelSerializer):
+    status = StatusSerializer(many=True)
+
+    class Meta:
+        model = Class
+        fields = '__all__'
+        extra_kwargs = {'user': {'write_only': True}}
 
 
 class MessageSerializer(serializers.ModelSerializer):
