@@ -27,9 +27,19 @@ class StatusMonthAPIView(APIView):
 
             statuses = Status.objects.filter(
                 expected__0__year=year,
-                expected__0__month=month,
-                user=user
-            ).select_related("classy").order_by("expected__0")
+                expected__0__month=month
+            ).select_related("classy")
+
+            # Filtra os status a partir do user de acordo com o tipo (vip, std, rep)
+            statuses = [
+                s for s in statuses if (
+                    (s.kind == "vip" and s.user == user) or 
+                    (s.kind in ["std", "rep"] and s.classy.user == user)
+                )
+            ]
+
+            # Ordenanda os status pela data de expected[0]
+            statuses.sort(key=lambda s: s.expected[0])
 
             grouped_statuses = {}
 
@@ -40,6 +50,7 @@ class StatusMonthAPIView(APIView):
                 if date_str not in grouped_statuses:
                     grouped_statuses[date_str] = {"data": date_str, "Statuses": []}
 
+                # Se classy for None, usa status.kind como nome da aula (Para turmas vip's)
                 aula_name = status_instance.classy.name if status_instance.classy else status_instance.kind
 
                 grouped_statuses[date_str]["Statuses"].append({
@@ -47,7 +58,7 @@ class StatusMonthAPIView(APIView):
                     "Aula": aula_name,
                     "Entrada": status_instance.expected[0],
                     "Saída": status_instance.expected[1],
-                    "Registro": status_instance.register
+                    "Registro": status_instance.register 
                 })
 
             result = {"Ponto": list(grouped_statuses.values())}
