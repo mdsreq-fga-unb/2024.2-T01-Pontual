@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 class DialogInputs extends StatelessWidget {
-  const DialogInputs({super.key, required this.title, required this.child});
+  const DialogInputs(
+      {super.key,
+      required this.title,
+      required this.child,
+      required this.onConfirm});
 
   final String title;
   final Widget child;
+  final void Function() onConfirm;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +60,7 @@ class DialogInputs extends StatelessWidget {
                                   ),
                                 ),
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () => onConfirm(),
                                   child: Text(
                                     "Confirmar",
                                     style: TextStyle(

@@ -70,6 +70,7 @@ void showDialogReposicao(BuildContext context) {
             }
 
             return DialogInputs(
+              onConfirm: () {},
               title: 'Cadastrar Reposição',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,6 +233,7 @@ void showDialogVip(BuildContext context) {
             }
 
             return DialogInputs(
+              onConfirm: () {},
               title: 'Cadastrar VIP',
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -312,6 +314,27 @@ void showDialogVip(BuildContext context) {
               ),
             );
           },
+        );
+      },
+    );
+  });
+}
+
+void showDialogHour(
+    BuildContext context, Function confirm, String title, bool isEntry) {
+  Future.microtask(() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return DialogInputs(
+          onConfirm: () => confirm(),
+          title: title,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 20),
+            child: Text(
+                "Deseja registrar esse horário como de ${isEntry ? "entrada" : "saída"}?"),
+          ),
         );
       },
     );
