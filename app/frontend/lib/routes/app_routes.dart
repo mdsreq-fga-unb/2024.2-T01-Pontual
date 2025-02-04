@@ -1,6 +1,6 @@
 class AppRoutes {
-  static const LS = '/';
-  static const RS = '/register';
-  static const PS = '/profile';
-  static const HP = '/homepage';
+  static const Login = '/';
+  static const Register = '/register';
+  static const Profile = '/profile';
+  static const Home = '/homepage';
 }
