@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/routes/app_routes.dart';
+import 'package:frontend/api/users_handler.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_input.dart';
 
 class RegisterScreen extends StatelessWidget {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,35 +97,80 @@ class RegisterScreen extends StatelessWidget {
                   SizedBox(height: isWideScreen ? 20 : 10),
                   CustomInput(
                     hintText: 'Nome',
-                    controller: TextEditingController(),
+                    controller: nameController,
                     keyboardType: TextInputType.name,
                   ),
                   CustomInput(
                     hintText: 'Email',
-                    controller: TextEditingController(),
+                    controller: emailController,
                     keyboardType: TextInputType.emailAddress,
-                  ),
-                  CustomInput(
-                    hintText: 'Celular',
-                    controller: TextEditingController(),
-                    keyboardType: TextInputType.phone,
                   ),
                   SizedBox(height: isWideScreen ? 20 : 10),
                   CustomInput(
                     hintText: 'Senha',
-                    controller: TextEditingController(),
+                    controller: passwordController,
                     isPassword: true,
                   ),
                   CustomInput(
                     hintText: 'Confirme a senha',
-                    controller: TextEditingController(),
+                    controller: confirmPasswordController,
                     isPassword: true,
                   ),
                   CustomButton(
                     text: 'Cadastrar',
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed(AppRoutes.HP); //APENAS PARA TESTE
+                    onPressed: () async {
+                      List<List<dynamic>> controllers = [
+                        [nameController, 'nome'],
+                        [emailController, 'email'],
+                        [passwordController, 'senha'],
+                        [confirmPasswordController, 'confirmar senha']
+                      ];
+
+                      for (var i = 0; i < controllers.length; i++) {
+                        if (controllers[i][0].text.trim() == "") {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  'O campo de ${controllers[i][1]} deve estar preenchido'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                          return;
+                        }
+                      }
+
+                      if (passwordController.text.trim() !=
+                          confirmPasswordController.text.trim()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("As senhas devem ser iguais"),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      } else {
+                        await UsersHandler()
+                            .register(
+                                nameController.text.trim(),
+                                emailController.text.trim(),
+                                passwordController.text.trim())
+                            .then((value) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  "Registrado com sucesso. Espere um administrador aprovar sua conta e comece a usar o aplicativo!"),
+                              backgroundColor: Colors.lightGreen,
+                            ),
+                          );
+                          print(value);
+                        }).catchError((error) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(error.toString()),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        });
+                      }
                     },
                   ),
                 ],

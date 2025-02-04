@@ -30,10 +30,10 @@ class ProfileScreen extends StatelessWidget {
       ),
       bottomNavigationBar: UseBar(
         onHomePressed: () {
-          Navigator.of(context).pushNamed(AppRoutes.HP);
+          Navigator.of(context).pushNamed(AppRoutes.Home);
         },
         onProfilePressed: () {
-          Navigator.of(context).pushNamed(AppRoutes.PS);
+          Navigator.of(context).pushNamed(AppRoutes.Profile);
         },
       ),
     );

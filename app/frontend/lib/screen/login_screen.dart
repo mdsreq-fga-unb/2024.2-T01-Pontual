@@ -1,12 +1,34 @@
-import 'package:flutter/material.dart';
+// import 'package:frontend/screen/home_page.dart';
+import 'package:frontend/screen/home_page.dart';
+import 'package:frontend/widgets/checkbox_default.dart';
+import 'package:frontend/utils/user_provider.dart';
+import 'package:frontend/api/users_handler.dart';
 import 'package:frontend/routes/app_routes.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_input.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginScreen extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final isAuthenticated = context.watch<UserProvider>().isAuthenticated;
+
+    bool? rememberMe = false;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (isAuthenticated) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFEDEDED),
@@ -65,13 +87,13 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: isWideScreen ? 20 : 10),
                   CustomInput(
                     hintText: 'Email',
-                    controller: TextEditingController(),
+                    controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                   ),
                   SizedBox(height: isWideScreen ? 20 : 10),
                   CustomInput(
                     hintText: 'Senha',
-                    controller: TextEditingController(),
+                    controller: passwordController,
                     isPassword: true,
                   ),
                   Padding(
@@ -81,12 +103,9 @@ class LoginScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Checkbox(
-                              value: false,
-                              onChanged: (bool? value) {
-                                // LOGICA CHECKBOX
-                              },
-                            ),
+                            CheckboxDefault(
+                                onChanged: (bool? value) =>
+                                    {rememberMe = value}),
                             Text(
                               'Lembre-se de mim',
                               style: TextStyle(
@@ -98,20 +117,40 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            // LÓGICA PARA SENHA ESQUECIDA
-                          },
-                          child: Text(
-                            'Esqueceu a senha?',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: isWideScreen ? 16 : 15,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFFF08484),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                // LÓGICA PARA SENHA ESQUECIDA
+                              },
+                              child: Text(
+                                'Esqueceu a senha?',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: isWideScreen ? 16 : 15,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xFFF08484),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(AppRoutes.Register);
+                              },
+                              child: Text(
+                                'Crie sua conta',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: isWideScreen ? 16 : 15,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xFFF08484),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
                       ],
                     ),
                   ),
@@ -119,8 +158,20 @@ class LoginScreen extends StatelessWidget {
                   CustomButton(
                     text: 'Login',
                     onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed(AppRoutes.RS); //APENAS PARA TESTE
+                      UsersHandler()
+                          .login(emailController.text, passwordController.text, rememberMe)
+                          .then((value) {
+                        context.read<UserProvider>().login(
+                            value['email'], value['name'], value['access']);
+                        Navigator.of(context).pushNamed(AppRoutes.Home);
+                      }).catchError((error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(error.toString()),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      });
                     },
                   ),
                 ],
