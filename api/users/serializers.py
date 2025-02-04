@@ -1,4 +1,8 @@
+from typing import Dict, Any
+
 from rest_framework import serializers, exceptions
+from rest_framework_simplejwt import serializers as jwt_serializers
+from rest_framework_simplejwt.tokens import RefreshToken
 from users.models import User
 
 
@@ -16,6 +20,17 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+
+class TokenObtainPairSerializerWithUserInfo(jwt_serializers.TokenObtainPairSerializer):
+
+    def validate(self, attrs: Dict[str, Any]) -> Dict[str, str]:
+        data = super().validate(attrs)
+
+        data['name'] = self.user.name
+        data['email'] = self.user.email
+
+        return data
 
 
 class ManageUserSerializer(serializers.Serializer):

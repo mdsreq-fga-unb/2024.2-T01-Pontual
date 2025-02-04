@@ -2,6 +2,8 @@ from django.conf import settings
 from django.shortcuts import render
 from rest_framework import request, response, views, permissions, status, exceptions
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.settings import api_settings
+from rest_framework_simplejwt import tokens
 from users import models, serializers
 
 
@@ -33,6 +35,19 @@ class Manage(views.APIView):
 class RefreshTokenTreats():
     DEVICES = ['MOBILE', 'DESKTOP', None]
 
+    def handle_remember_me(self, request, response):
+        remember_me = request.data.get('remember_me', True)
+
+        refresh_token = response.data.pop('refresh')
+        if remember_me:
+            jwt_settings = settings.SIMPLE_JWT
+            response.set_cookie(key="refresh", value=refresh_token,
+                                max_age=jwt_settings["REFRESH_TOKEN_LIFETIME"],
+                                secure=jwt_settings["REFRESH_TOKEN_SECURE"],
+                                httponly=True, samesite="Lax")
+
+        return response
+
     def handle_mobile_or_desktop(self, request, response):
         device_type = request.headers.get('Device-Type')
         if device_type not in self.DEVICES:
@@ -40,12 +55,7 @@ class RefreshTokenTreats():
         elif device_type == 'MOBILE':
             return response
 
-        jwt_settings = settings.SIMPLE_JWT
-        refresh_token = response.data.pop('refresh')
-        response.set_cookie(key="refresh", value=refresh_token,
-                            max_age=jwt_settings["REFRESH_TOKEN_LIFETIME"],
-                            secure=jwt_settings["REFRESH_TOKEN_SECURE"],
-                            httponly=True, samesite="Lax")
+        response = self.handle_remember_me(request, response)
 
         return response
 
@@ -72,5 +82,13 @@ class Refresh(TokenRefreshView, RefreshTokenTreats):
         })
 
         response = super().post(request, *args, **kwargs)
+
+        access_token = tokens.AccessToken(response.data.get('access'))
+        user_id = access_token.payload.get(api_settings.USER_ID_CLAIM)
+
+        user = models.User.objects.get(uuid=user_id)
+
+        response.data['name'] = user.name
+        response.data['email'] = user.email
 
         return self.handle_mobile_or_desktop(request, response)

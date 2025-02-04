@@ -75,6 +75,8 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_SECURE': True,
     'ROTATE_REFRESH_TOKENS': True,
 
+    'TOKEN_OBTAIN_SERIALIZER': 'users.serializers.TokenObtainPairSerializerWithUserInfo',
+
     'USER_ID_FIELD': 'uuid',
     'USER_ID_CLAIM': 'user_uuid',
 }
