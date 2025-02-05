@@ -93,3 +93,39 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = '__all__'
+
+
+class ReportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Report
+        fields = '__all__'
+
+    def validate_relatorio(self, value):
+        # Verifica se existe a chave "Ponto"
+        if not isinstance(value, dict) or "Ponto" not in value:
+            raise serializers.ValidationError("O campo 'relatorio' deve conter a chave 'Ponto'.")
+
+        if not isinstance(value["Ponto"], list):
+            raise serializers.ValidationError("O campo 'Ponto' deve ser uma lista.")
+
+        # Valida cada entrada da lista "Ponto"
+        for entry in value["Ponto"]:
+            if not isinstance(entry, dict):
+                raise serializers.ValidationError("Cada item em 'Ponto' deve ser um dicionário.")
+
+            if "data" not in entry or "Statuses" not in entry:
+                raise serializers.ValidationError("Cada item de 'Ponto' deve conter 'data' e 'Statuses'.")
+
+            if not isinstance(entry["Statuses"], list):
+                raise serializers.ValidationError("O campo 'Statuses' deve ser uma lista.")
+
+            # Valida cada status dentro de "Statuses"
+            for status in entry["Statuses"]:
+                if not isinstance(status, dict):
+                    raise serializers.ValidationError("Cada item em 'Statuses' deve ser um dicionário.")
+
+                required_keys = {"id", "Aula", "Entrada", "Saída", "Registro_Entrada", "Registro_Saida"}
+                if not required_keys.issubset(status.keys()):
+                    raise serializers.ValidationError(f"O status deve conter as chaves: {required_keys}")
+
+        return value

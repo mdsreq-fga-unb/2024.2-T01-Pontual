@@ -148,3 +148,13 @@ class Notification(models.Model):
         blank=False, null=False,
         related_name='received_notifications'
     )
+
+
+class Report(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reports")
+    start = models.DateTimeField(blank=False, null=False)
+    end = models.DateTimeField(blank=False, null=False)
+    relatorio = models.JSONField(default=dict)
+
+    def __str__(self):
+        return f"Relatório de {self.user.username} ({self.start} - {self.end})"
