@@ -3,8 +3,8 @@ import 'package:frontend/routes/app_routes.dart';
 import 'package:frontend/widgets/adminUsebar.dart';
 import 'package:frontend/widgets/custom_appbar.dart';
 import 'package:frontend/widgets/dateCard.dart';
-import 'package:frontend/widgets/employeeCards/lateCard.dart';
-import 'package:frontend/widgets/employeeCards/onTimeCard.dart';
+import 'package:frontend/widgets/adminCards/lateCard.dart';
+import 'package:frontend/widgets/adminCards/onTimeCard.dart';
 
 class AdminHome extends StatelessWidget {
   @override
