@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/routes/app_routes.dart';
+import 'package:frontend/widgets/adminUsebar.dart';
 import 'package:frontend/widgets/custom_appbar.dart';
 import 'package:frontend/widgets/dateCard.dart';
 import 'package:frontend/widgets/employeeCards/lateCard.dart';
 import 'package:frontend/widgets/employeeCards/onTimeCard.dart';
-import 'package:frontend/widgets/usebar.dart';
 
 class AdminHome extends StatelessWidget {
   @override
@@ -62,14 +62,7 @@ class AdminHome extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: UseBar(
-        onHomePressed: () {
-          Navigator.of(context).pushNamed(AppRoutes.HP);
-        },
-        onProfilePressed: () {
-          Navigator.of(context).pushNamed(AppRoutes.PS);
-        },
-      ),
+      bottomNavigationBar: AdminUseBar(),
     );
   }
 }
