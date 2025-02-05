@@ -3,6 +3,7 @@ import 'package:frontend/routes/app_routes.dart';
 import 'package:frontend/widgets/custom_appbar.dart';
 import 'package:frontend/widgets/dateCard.dart';
 import 'package:frontend/widgets/employeeCards/lateCard.dart';
+import 'package:frontend/widgets/employeeCards/onTimeCard.dart';
 import 'package:frontend/widgets/usebar.dart';
 
 class AdminHome extends StatelessWidget {
@@ -38,7 +39,26 @@ class AdminHome extends StatelessWidget {
             Latecard(
                 turma: "TURMA 1",
                 name: "Funcionário da SIlva de Okiveira",
-                time: 20)
+                time: 20),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              children: [
+                Icon(Icons.circle,
+                    color: const Color.fromARGB(255, 18, 173, 52), size: 12),
+                SizedBox(width: 5),
+                Text('Registrados',
+                    style: TextStyle(fontSize: 12, color: Color(0xFF445668))),
+              ],
+            ),
+            OnTimeCard(
+              turma: "TURMA 1",
+              name: "Funcionário da SIlva de Okiveira",
+              time: "08:37",
+              delay: 5,
+              lateRegister: false,
+            ),
           ],
         ),
       ),
