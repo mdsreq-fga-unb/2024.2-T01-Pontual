@@ -124,7 +124,7 @@ class ReportSerializer(serializers.ModelSerializer):
                 if not isinstance(status, dict):
                     raise serializers.ValidationError("Cada item em 'Statuses' deve ser um dicionário.")
 
-                required_keys = {"id", "Aula", "Entrada", "Saída", "Registro_Entrada", "Registro_Saida"}
+                required_keys = {"id", "Aula", "Entrada", "Saída", "Registro_Entrada", "Registro_Saida", "Comentario"}
                 if not required_keys.issubset(status.keys()):
                     raise serializers.ValidationError(f"O status deve conter as chaves: {required_keys}")
 
