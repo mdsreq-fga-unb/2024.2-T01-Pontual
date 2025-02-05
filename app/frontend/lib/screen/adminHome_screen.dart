@@ -62,7 +62,17 @@ class AdminHome extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: AdminUseBar(),
+      bottomNavigationBar: AdminUseBar(
+        onHomePressed: () {
+          Navigator.of(context).pushNamed(AppRoutes.AHP);
+        },
+        onReportPressed: () {
+          Navigator.of(context).pushNamed(AppRoutes.ARP);
+        },
+        onSettingsPressed: () {
+          Navigator.of(context).pushNamed(AppRoutes.ASP);
+        },
+      ),
     );
   }
 }

@@ -4,4 +4,6 @@ class AppRoutes {
   static const PS = '/profile';
   static const HP = '/homepage';
   static const AHP = '/admin-homepage';
+  static const ARP = '/admin-reportpage';
+  static const ASP = '/admin-settingspage';
 }
