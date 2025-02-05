@@ -44,28 +44,37 @@ class _LatecardState extends State<Latecard> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 5),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment
-                  .center, // Centralizando o conteúdo verticalmente
-              crossAxisAlignment: CrossAxisAlignment.end,
+            padding: EdgeInsets.only(right: 16),
+            child: Row(
               children: [
-                Row(
-                  children: [
-                    Text(
-                      "${widget.time} min",
-                      style: TextStyle(color: Color(0xFF445668), fontSize: 16),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.chat_bubble_outline_outlined),
-                      color: Color(0xFF2DA5D0),
-                      iconSize: 25,
-                    ),
-                  ],
+                Text(
+                  "${widget.time} min",
+                  style: TextStyle(color: Color(0xFF445668), fontSize: 16),
+                ),
+                SizedBox(width: 10),
+                SizedBox(
+                  height: 32, // Limitando a altura da Column
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.chat_bubble_outline_outlined),
+                        color: Color(0xFF2DA5D0),
+                        iconSize: 20,
+                        padding: EdgeInsets.zero, // Remove padding extra
+                        constraints:
+                            BoxConstraints(), // Evita restrições extras
+                      ),
+                      Text(
+                        "Notificação",
+                        style: TextStyle(
+                          color: Color(0xFF2DA5D0),
+                          fontSize: 6,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
