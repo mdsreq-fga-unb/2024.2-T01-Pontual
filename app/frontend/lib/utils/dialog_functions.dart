@@ -317,3 +317,135 @@ void showDialogVip(BuildContext context) {
     );
   });
 }
+
+void showDialogReport(BuildContext context) {
+  Navigator.of(context).pop(); // Fecha o primeiro diálogo
+
+  Future.microtask(() {
+    DateTime? selectedDateBegin;
+    DateTime? selectedDateEnd;
+
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            Future<void> _selectDateBegin() async {
+              final DateTime? picked = await showDatePicker(
+                context: context,
+                initialDate: selectedDateBegin ?? DateTime.now(),
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2101),
+              );
+              if (picked != null) {
+                setState(() {
+                  selectedDateBegin = picked;
+                });
+              }
+            }
+
+            Future<void> _selectDateEnd() async {
+              final DateTime? picked = await showDatePicker(
+                context: context,
+                initialDate: selectedDateBegin ?? DateTime.now(),
+                firstDate: selectedDateBegin ??
+                    DateTime(
+                        2000), // Garante que a data final não seja menor que a inicial
+                lastDate: DateTime(2101),
+              );
+              if (picked != null) {
+                setState(() {
+                  selectedDateEnd = picked;
+                });
+              }
+            }
+
+            return DialogInputs(
+              title: 'Gerar Relatório de Registro de Ponto',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Data Inicial"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: GestureDetector(
+                        onTap: _selectDateBegin,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              selectedDateBegin == null
+                                  ? "Selecionar data"
+                                  : "${selectedDateBegin!.day}/${selectedDateBegin!.month}/${selectedDateBegin!.year}",
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            Icon(
+                              Icons.calendar_today,
+                              color: Color(0xFFAFAFAF),
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Data Final"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: GestureDetector(
+                        onTap: _selectDateEnd,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              selectedDateEnd == null
+                                  ? "Selecionar data"
+                                  : "${selectedDateEnd!.day}/${selectedDateEnd!.month}/${selectedDateEnd!.year}",
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            Icon(
+                              Icons.calendar_today,
+                              color: Color(0xFFAFAFAF),
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  )
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  });
+}

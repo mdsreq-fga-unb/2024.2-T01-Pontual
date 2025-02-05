@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/routes/app_routes.dart';
+import 'package:frontend/utils/dialog_functions.dart';
 import 'package:frontend/widgets/adminCards/dateReportCard.dart';
 import 'package:frontend/widgets/adminUsebar.dart';
 import 'package:frontend/widgets/custom_appbar.dart';
@@ -59,7 +60,11 @@ class AdminReportPage extends StatelessWidget {
             ],
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: [ReportButton(onPressed: () => {})],
+              children: [
+                ReportButton(
+                  onPressed: () => showDialogReport(context),
+                )
+              ],
             )
           ],
         ),
