@@ -55,12 +55,14 @@ class AdminSettingsPage extends StatelessWidget {
               height: 10,
             ),
             SettingsCard(
-                title: "Alterar Senha",
-                color: "#2DA5D0",
-                icon: Icon(
-                  Icons.edit,
-                  color: Color(0xFF2DA5D0),
-                )),
+              title: "Alterar Senha",
+              color: "#2DA5D0",
+              icon: Icon(
+                Icons.edit,
+                color: Color(0xFF2DA5D0),
+              ),
+              onPressed: () => {},
+            ),
             SizedBox(
               height: 20,
             ),
@@ -77,21 +79,25 @@ class AdminSettingsPage extends StatelessWidget {
                 icon: Icon(
                   Icons.person_add_alt,
                   color: Color(0xFF2DA5D0),
-                )),
+                ),
+                onPressed: () => {}),
             SettingsCard(
                 title: "Gerenciar Turmas",
                 color: "#2DA5D0",
                 icon: Icon(
                   Icons.class_outlined,
                   color: Color(0xFF2DA5D0),
-                )),
+                ),
+                onPressed: () =>
+                    {Navigator.of(context).pushNamed(AppRoutes.AEP)}),
             SettingsCard(
                 title: "Excluir Funcionário",
                 color: "#AB0D0D",
                 icon: Icon(
                   Icons.delete_outlined,
                   color: Color(0xFFFB0D0D),
-                )),
+                ),
+                onPressed: () => {}),
           ],
         ),
       ),

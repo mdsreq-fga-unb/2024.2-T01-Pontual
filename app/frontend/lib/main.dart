@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/routes/app_routes.dart';
+import 'package:frontend/screen/adminEmployee.dart';
 import 'package:frontend/screen/adminHome_screen.dart';
 import 'package:frontend/screen/adminReport_screen.dart';
 import 'package:frontend/screen/adminSettings_screen.dart';
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
         AppRoutes.HP: (context) => HomePage(),
         AppRoutes.AHP: (context) => AdminHome(),
         AppRoutes.ARP: (context) => AdminReportPage(),
-        AppRoutes.ASP: (context) => AdminSettingsPage()
+        AppRoutes.ASP: (context) => AdminSettingsPage(),
+        AppRoutes.AEP: (context) => AdminEmployees()
       },
     );
   }

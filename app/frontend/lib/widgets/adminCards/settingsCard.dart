@@ -5,11 +5,13 @@ class SettingsCard extends StatelessWidget {
       {super.key,
       required this.title,
       required this.color,
-      required this.icon});
+      required this.icon,
+      required this.onPressed});
 
   final String title;
   final String color;
   final Widget icon;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class SettingsCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: onPressed,
                   icon: icon,
                   color: Color(0xFF2DA5D0),
                   iconSize: 25,
