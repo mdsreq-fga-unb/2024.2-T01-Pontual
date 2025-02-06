@@ -7,4 +7,5 @@ class AppRoutes {
   static const ARP = '/admin-reportpage';
   static const ASP = '/admin-settingspage';
   static const AEP = '/admin-employees';
+  static const AEC = '/admin-employee-classes';
 }

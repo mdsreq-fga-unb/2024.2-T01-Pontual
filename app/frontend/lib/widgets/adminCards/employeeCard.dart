@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/routes/app_routes.dart';
 
 class EmployeeCard extends StatelessWidget {
   const EmployeeCard({super.key, required this.name, required this.classes});
@@ -48,7 +49,8 @@ class EmployeeCard extends StatelessWidget {
                       width: 15,
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          {Navigator.of(context).pushNamed(AppRoutes.AEC)},
                       icon: Icon(Icons.arrow_circle_right_outlined),
                       color: Color(0xFF2DA5D0),
                       iconSize: 25,
