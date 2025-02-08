@@ -5,6 +5,7 @@ import 'package:frontend/widgets/adminCards/dateReportCard.dart';
 import 'package:frontend/widgets/adminUsebar.dart';
 import 'package:frontend/widgets/custom_appbar.dart';
 import 'package:frontend/widgets/reportButton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminReportPage extends StatelessWidget {
   final List<Map<String, String>> reports = [
@@ -55,6 +56,13 @@ class AdminReportPage extends StatelessWidget {
               ...groupedReports[year]!.map((report) => DateReportCard(
                     dateBegin: report['dateBegin']!,
                     dateEnd: report['dateEnd']!,
+                    onPressed: () async {
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.setString('dateBegin', report['dateBegin']!);
+                      await prefs.setString('dateEnd', report['dateEnd']!);
+
+                      Navigator.of(context).pushNamed(AppRoutes.ERP);
+                    },
                   )),
               SizedBox(height: 15),
             ],

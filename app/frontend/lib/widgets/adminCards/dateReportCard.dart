@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 class DateReportCard extends StatelessWidget {
   const DateReportCard(
-      {super.key, required this.dateBegin, required this.dateEnd});
+      {super.key,
+      required this.dateBegin,
+      required this.dateEnd,
+      required this.onPressed});
 
   final String dateBegin;
   final String dateEnd;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,7 @@ class DateReportCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: onPressed,
                   icon: Icon(Icons.arrow_circle_right_outlined),
                   color: Color(0xFF2DA5D0),
                   iconSize: 25,

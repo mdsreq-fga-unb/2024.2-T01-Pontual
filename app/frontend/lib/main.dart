@@ -1,11 +1,12 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/routes/app_routes.dart';
-import 'package:frontend/screen/adminEmployee_screen.dart';
-import 'package:frontend/screen/adminHome_screen.dart';
-import 'package:frontend/screen/adminReport_screen.dart';
-import 'package:frontend/screen/adminSettings_screen.dart';
-import 'package:frontend/screen/employeeClasses_screen.dart';
+import 'package:frontend/screen/admin/adminEmployee_screen.dart';
+import 'package:frontend/screen/admin/adminHome_screen.dart';
+import 'package:frontend/screen/admin/adminReport_screen.dart';
+import 'package:frontend/screen/admin/adminSettings_screen.dart';
+import 'package:frontend/screen/admin/employeeClasses_screen.dart';
+import 'package:frontend/screen/admin/employeesReport_screen.dart';
 import 'package:frontend/screen/profile_screen.dart';
 import 'package:frontend/utils/theme.dart';
 import 'screen/login_screen.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.ASP: (context) => AdminSettingsPage(),
         AppRoutes.AEP: (context) => AdminEmployees(),
         AppRoutes.AEC: (context) => AdminEmployeeClasses(),
+        AppRoutes.ERP: (context) => EmployeesReportPage(),
       },
     );
   }
