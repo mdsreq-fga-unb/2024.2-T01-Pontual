@@ -799,3 +799,225 @@ void showDialogNewClass(BuildContext context) {
     );
   });
 }
+
+
+void showDialogEditClass(BuildContext context) {
+
+  
+
+
+
+  Future.microtask(() {
+    DateTime? selectedDate;
+    DateTime? selectedDateFinal;
+    TimeOfDay? selectedEntrada = TimeOfDay(hour: 7, minute: 0);
+    String? selectedFaixaEtaria = "Infantil";
+    List<String> selectedDiasDaSemana = ["Segunda", "Quarta", "Sexta"];
+    TextEditingController nomeController =
+        TextEditingController(text: "Gramática");
+
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            Future<void> _selectEntrada() async {
+              final TimeOfDay? picked = await showTimePicker(
+                context: context,
+                initialTime: selectedEntrada ?? TimeOfDay.now(),
+              );
+              if (picked != null) {
+                setState(() {
+                  selectedEntrada = picked;
+                });
+              }
+            }
+
+            return DialogInputs(
+              title: 'Editar Turma',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Nome da Aula"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: nomeController,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Digite aqui...",
+                                hintStyle: TextStyle(color: Color(0xFFAFAFAF)),
+                                contentPadding: EdgeInsets.only(bottom: 14),
+                              ),
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 14),
+                            ),
+                          ),
+                          Icon(
+                            Icons.keyboard_alt_outlined,
+                            color: Color(0xFFAFAFAF),
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Dias da Semana"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            selectedDiasDaSemana.join(', '),
+                            style: TextStyle(fontSize: 10),
+                          ),
+                          Icon(
+                            Icons.calendar_today,
+                            color: Color(0xFFAFAFAF),
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Horário de Entrada"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: GestureDetector(
+                        onTap: _selectEntrada,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${selectedEntrada!.hour.toString().padLeft(2, '0')}:${selectedEntrada!.minute.toString().padLeft(2, '0')}",
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            Icon(
+                              Icons.access_time,
+                              color: Color(0xFFAFAFAF),
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Tipo de Aula"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: DropdownButton<String>(
+                        value: selectedFaixaEtaria,
+                        hint: Text("Selecione"),
+                        isExpanded: true,
+                        icon: Icon(Icons.arrow_drop_down, color: Color(0xFFAFAFAF)),
+                        style: TextStyle(fontSize: 12, color: Colors.black),
+                        underline: SizedBox(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedFaixaEtaria = newValue;
+                          });
+                        },
+                        items: <String>['Infantil', 'Regular', 'VIP']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Data de Início"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text("Quarta-feira, 4 de dezembro de 2023",
+                          style: TextStyle(fontSize: 10)),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Data de Fim"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text("Quarta-feira, 4 de dezembro de 2024",
+                          style: TextStyle(fontSize: 10)),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  });
+}

@@ -4,6 +4,7 @@ import 'package:frontend/widgets/custom_appbar.dart';
 import 'package:frontend/widgets/dateCard.dart';
 import 'package:frontend/widgets/timeCard.dart';
 import 'package:frontend/widgets/usebar.dart';
+import 'package:frontend/utils/dialog_functions.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: Color(0XFFEDEDED),
       appBar: CustomAppBar(
         title: "Nome de Usuário",
-        page: "Bem Vindo",
+        page: "Bem-Vindo",
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -20,36 +21,46 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 16),
-            Text('Datas',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal)),
+            Text(
+              'Datas',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+            ),
             SizedBox(height: 8),
             DateCardComponent(),
             SizedBox(height: 16),
-            Text('Registro de Ponto',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(
+              'Registro de Ponto',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             SizedBox(height: 8),
             TimeCardWidget(
               title: 'Turma 2',
               time: '19:45 - 21:00',
               isRegistered: false,
               status: 'Aguardando Registro',
-              endTime: '21:00', // Aqui está o valor do horário de término
+              endTime: '21:00',
             ),
             TimeCardWidget(
               title: 'Turma 2',
               time: '21:00 - 22:15',
               isRegistered: false,
               status: 'Aguardando Registro',
-              endTime: '22:15', // Aqui está o valor do horário de término
+              endTime: '22:15',
             ),
             SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Turmas Especiais',
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                TextButton(onPressed: () {}, child: Text('Editar')),
+                Text(
+                  'Turmas Especiais',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                  onPressed: () {
+                    showDialogEditClass(context);
+                  },
+                  child: Text('Editar'),
+                ),
               ],
             ),
             TimeCardWidget(
@@ -57,7 +68,7 @@ class HomePage extends StatelessWidget {
               time: '13:00 - 14:15',
               isRegistered: false,
               status: 'Aguardando Registro',
-              endTime: '14:15', // Aqui está o valor do horário de término
+              endTime: '14:15',
             ),
           ],
         ),
