@@ -1,19 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
+  <!-- Base path for the web app -->
   <base href="/app/frontend/">
 
   <meta charset="UTF-8">
@@ -29,10 +17,36 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
+  <!-- Link to the manifest file -->
+  <link rel="manifest" href="./manifest.json">
+
+  <!-- Title of the web app -->
   <title>frontend</title>
-  <link rel="manifest" href="manifest.json">
+
+  <!-- Internal Styles to center the logo and set background -->
+  <style>
+    /* Set the background color to pink and center the content */
+    body {
+      background-color: #F08484; /* Rosa */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Make sure the logo fits properly */
+    img {
+      max-width: 80%;
+      height: auto;
+    }
+  </style>
 </head>
 <body>
+  <!-- Your logo or any content you want to display -->
+  <img src="./logo150x150.png" alt="Logo">
+
+  <!-- Script for Flutter -->
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
