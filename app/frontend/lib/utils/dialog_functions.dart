@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/widgets/dialog_inputs.dart';
+import 'package:frontend/widgets/dialog/dialog_inputs.dart';
 
 void showDialogReposicao(BuildContext context) {
   Navigator.of(context).pop(); // Fecha o primeiro diálogo
@@ -440,6 +440,356 @@ void showDialogReport(BuildContext context) {
                   SizedBox(
                     height: 15,
                   )
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  });
+}
+
+void showDialogNewClass(BuildContext context) {
+  Navigator.of(context).pop(); // Fecha o primeiro diálogo
+
+  Future.microtask(() {
+    DateTime? selectedDate; // Data inicial
+    DateTime? selectedDateFinal; // Data final
+    TimeOfDay? selectedEntrada;
+    String? selectedFaixaEtaria;
+    List<String> selectedDiasDaSemana = [];
+
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            Future<void> _selectEntrada() async {
+              final TimeOfDay? picked = await showTimePicker(
+                context: context,
+                initialTime: selectedEntrada ?? TimeOfDay.now(),
+              );
+              if (picked != null) {
+                setState(() {
+                  selectedEntrada = picked;
+                });
+              }
+            }
+
+            // Função para abrir o Dialog de dias da semana
+            void _selectDiasDaSemana() async {
+              List<String> diasDaSemana = [
+                "Segunda-feira",
+                "Terça-feira",
+                "Quarta-feira",
+                "Quinta-feira",
+                "Sexta-feira",
+                "Sábado",
+                "Domingo"
+              ];
+
+              final List<String> diasSelecionados = await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return SimpleDialog(
+                    title: Text("Selecione os Dias da Semana"),
+                    children: diasDaSemana.map((dia) {
+                      return SimpleDialogOption(
+                        onPressed: () {
+                          if (selectedDiasDaSemana.contains(dia)) {
+                            selectedDiasDaSemana.remove(dia);
+                          } else {
+                            selectedDiasDaSemana.add(dia);
+                          }
+                          Navigator.pop(context, selectedDiasDaSemana);
+                        },
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              value: selectedDiasDaSemana.contains(dia),
+                              onChanged: (bool? selected) {
+                                if (selected != null && selected) {
+                                  selectedDiasDaSemana.add(dia);
+                                } else {
+                                  selectedDiasDaSemana.remove(dia);
+                                }
+                                Navigator.pop(context, selectedDiasDaSemana);
+                              },
+                            ),
+                            Text(dia),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  );
+                },
+              );
+
+              setState(() {
+                selectedDiasDaSemana = diasSelecionados;
+              });
+            }
+
+            return DialogInputs(
+              title: 'Cadastrar Turma',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Nome da Aula"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Digite aqui...",
+                                hintStyle: TextStyle(color: Color(0xFFAFAFAF)),
+                                contentPadding: EdgeInsets.only(bottom: 14),
+                              ),
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 14),
+                            ),
+                          ),
+                          Icon(
+                            Icons.keyboard_alt_outlined,
+                            color: Color(0xFFAFAFAF),
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Dias da Semana"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: GestureDetector(
+                        onTap: _selectDiasDaSemana, // Abre o dialog de dias
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              selectedDiasDaSemana.isEmpty
+                                  ? "Selecionar dias"
+                                  : selectedDiasDaSemana.join(', '),
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            Icon(
+                              Icons.calendar_today,
+                              color: Color(0xFFAFAFAF),
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Horário de Entrada"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: GestureDetector(
+                        onTap: _selectEntrada,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              selectedEntrada == null
+                                  ? "Selecionar horário"
+                                  : "${selectedEntrada!.hour.toString().padLeft(2, '0')}:${selectedEntrada!.minute.toString().padLeft(2, '0')}",
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            Icon(
+                              Icons.access_time,
+                              color: Color(0xFFAFAFAF),
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Tipo"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: DropdownButton<String>(
+                        value:
+                            selectedFaixaEtaria, // variável para armazenar a seleção
+                        hint: Text("Selecione"),
+                        isExpanded: true,
+                        icon: Icon(Icons.arrow_drop_down,
+                            color: Color(0xFFAFAFAF)),
+                        style: TextStyle(fontSize: 12, color: Colors.black),
+                        underline: SizedBox(), // remove a linha embaixo
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedFaixaEtaria = newValue;
+                          });
+                        },
+                        items: <String>['Infantil', 'Jovem', 'Adulto', 'Misto']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Data de Início"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: GestureDetector(
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: selectedDate ?? DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101),
+                          );
+                          if (pickedDate != null &&
+                              pickedDate != selectedDate) {
+                            setState(() {
+                              selectedDate = pickedDate;
+                            });
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              selectedDate == null
+                                  ? "Selecione a data"
+                                  : "${selectedDate!.day.toString().padLeft(2, '0')}/${selectedDate!.month.toString().padLeft(2, '0')}/${selectedDate!.year}",
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            Icon(
+                              Icons.calendar_today,
+                              color: Color(0xFFAFAFAF),
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.only(left: 12),
+                    child: Text("Data Final"),
+                  ),
+                  Center(
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                      width: 290,
+                      height: 27,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE7E7E7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: GestureDetector(
+                        onTap: () async {
+                          // Se selectedDateFinal já estiver definido, permite selecionar a data final com base na data inicial
+                          DateTime firstSelectableDate =
+                              selectedDate ?? DateTime.now();
+
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: selectedDateFinal ??
+                                firstSelectableDate, // Usa a data final se já houver uma, caso contrário usa a data inicial ou hoje
+                            firstDate:
+                                firstSelectableDate, // Impede selecionar uma data anterior à data inicial
+                            lastDate: DateTime(2101),
+                          );
+
+                          if (pickedDate != null &&
+                              pickedDate != selectedDateFinal) {
+                            setState(() {
+                              selectedDateFinal = pickedDate;
+                            });
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              selectedDateFinal == null
+                                  ? "Selecione a data final"
+                                  : "${selectedDateFinal!.day.toString().padLeft(2, '0')}/${selectedDateFinal!.month.toString().padLeft(2, '0')}/${selectedDateFinal!.year}",
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            Icon(
+                              Icons.calendar_today,
+                              color: Color(0xFFAFAFAF),
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
                 ],
               ),
             );

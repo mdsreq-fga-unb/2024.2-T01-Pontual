@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dialog_options.dart';
+import 'dialog/dialog_options.dart';
 
 class UseBar extends StatelessWidget {
   final VoidCallback onHomePressed;
