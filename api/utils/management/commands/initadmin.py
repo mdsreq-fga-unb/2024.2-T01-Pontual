@@ -11,6 +11,7 @@ class Command(BaseCommand):
             password = config("ADMIN_PASS")
             print(f'Conta do usuário {email} será criada!')
             User.objects.create_superuser(
+                name="Admin",
                 email=email, password=password,
                 is_active=True
             )
