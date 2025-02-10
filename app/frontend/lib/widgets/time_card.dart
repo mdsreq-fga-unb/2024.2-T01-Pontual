@@ -12,21 +12,23 @@ enum Status { waiting, leave, ok, closed }
 class TimeCardWidget extends StatelessWidget {
   final int minutesDelayed = 15;
 
-  final int id;
+  final int? id;
   final int? statusId;
   final String? statusMessage;
   final String title;
+  final String? kind;
   final DateTime startTime, endTime;
   final DateTime? startRegister, endRegister;
   final VoidCallback updateClasses;
 
   const TimeCardWidget({
     Key? key,
-    required this.id,
     required this.title,
     required this.startTime,
     required this.endTime,
     required this.updateClasses,
+    this.id,
+    this.kind,
     this.startRegister,
     this.endRegister,
     this.statusId,
@@ -59,10 +61,17 @@ class TimeCardWidget extends StatelessWidget {
 
       if (endRegister != null) {
         status = Status.ok;
-        iconColor = Colors.green;
+        if (kind == "std" ||
+            kind == null ||
+            endRegister!.difference(DateTime.now()).inMinutes <= 0) {
+          iconColor = Colors.green;
 
-        String formattedEndRegister = formatter.format(endRegister as DateTime);
-        iconStatus += "\nSaída em $formattedEndRegister";
+          String formattedEndRegister =
+              formatter.format(endRegister as DateTime);
+          iconStatus += "\nSaída em $formattedEndRegister";
+        } else {
+          iconStatus += "\nAguardando Finalização";
+        }
       } else {
         iconStatus += "\nAguardando Saída";
       }
@@ -91,13 +100,26 @@ class TimeCardWidget extends StatelessWidget {
             builder: (BuildContext context) {
               return DialogInputs(
                 onConfirm: () => {
-                  StatusHandler()
-                      .close(id, notes, startTime, endTime,
-                          context.read<UserProvider>().accessToken)
-                      .then((value) {
-                    updateClasses();
-                    Navigator.of(context).pop();
-                  }).catchError((error) {})
+                  if (kind == "std")
+                    {
+                      StatusHandler()
+                          .close(id!, notes, startTime, endTime,
+                              context.read<UserProvider>().accessToken)
+                          .then((value) {
+                        updateClasses();
+                        Navigator.of(context).pop();
+                      }).catchError((error) {})
+                    }
+                  else
+                    {
+                      StatusHandler()
+                          .patch(statusId!, null, null, notes,
+                              context.read<UserProvider>().accessToken)
+                          .then((value) {
+                        updateClasses();
+                        Navigator.of(context).pop();
+                      }).catchError((error) {})
+                    }
                 },
                 title: title,
                 child: Padding(
@@ -120,37 +142,76 @@ class TimeCardWidget extends StatelessWidget {
         } else if (status == Status.waiting || status == Status.leave) {
           final DateTime now = DateTime.now();
 
-          final String entry = now.toLocal().hour.toString().padLeft(2, "0");
-          final String leave = now.toLocal().minute.toString().padLeft(2, "0");
-          final String title = "$entry:$leave";
+          if (startTime.difference(now).inMinutes <= 25) {
+            final String entry = now.toLocal().hour.toString().padLeft(2, "0");
+            final String leave =
+                now.toLocal().minute.toString().padLeft(2, "0");
+            final String title = "$entry:$leave";
 
-          showDialogHour(
-            context,
-            () => {
-              if (status == Status.waiting)
-                {
-                  StatusHandler()
-                      .entry(id, startTime, endTime, now,
-                          context.read<UserProvider>().accessToken)
-                      .then((value) {
-                    updateClasses();
-                    Navigator.of(context).pop();
-                  }).catchError((error) {})
-                }
-              else if (status == Status.leave)
-                {
-                  StatusHandler()
-                      .leave(statusId as int, (startRegister as DateTime), now,
-                          context.read<UserProvider>().accessToken)
-                      .then((value) {
-                    updateClasses();
-                    Navigator.of(context).pop();
-                  }).catchError((error) {})
-                }
-            },
-            title,
-            status == Status.waiting,
-          );
+            showDialogHour(
+              context,
+              () => {
+                if (status == Status.waiting)
+                  {
+                    if (kind == "std")
+                      {
+                        StatusHandler()
+                            .entry(id!, startTime, endTime, now,
+                                context.read<UserProvider>().accessToken)
+                            .then((value) {
+                          updateClasses();
+                          Navigator.of(context).pop();
+                        }).catchError((error) {})
+                      }
+                    else
+                      {
+                        StatusHandler()
+                            .patch(
+                                statusId as int,
+                                now,
+                                now.add(
+                                  Duration(
+                                      minutes: endTime
+                                          .difference(startTime)
+                                          .inMinutes),
+                                ),
+                                null,
+                                context.read<UserProvider>().accessToken)
+                            .then((value) {
+                          updateClasses();
+                          Navigator.of(context).pop();
+                        }).catchError((error) {})
+                      }
+                  }
+                else if (status == Status.leave)
+                  {
+                    StatusHandler()
+                        .patch(statusId as int, (startRegister as DateTime),
+                            now, null, context.read<UserProvider>().accessToken)
+                        .then((value) {
+                      updateClasses();
+                      Navigator.of(context).pop();
+                    }).catchError((error) {})
+                  }
+              },
+              title,
+              status == Status.waiting,
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                behavior: SnackBarBehavior.floating,
+                content: Text(
+                  "A presença só pode ser registrada a partir de 25 minutos antes do início da aula!",
+                ),
+                backgroundColor: Colors.amber,
+                margin: EdgeInsets.only(
+                  bottom: 55,
+                ),
+                duration: Duration(seconds: 5),
+              ),
+            );
+          }
         }
       },
       child: Container(

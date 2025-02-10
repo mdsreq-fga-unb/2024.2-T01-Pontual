@@ -6,10 +6,13 @@ class CustomInput extends StatefulWidget {
   final TextInputType keyboardType;
   final bool isPassword;
   final double spacing;
+  final double width, height;
 
   CustomInput({
     required this.hintText,
     required this.controller,
+    this.width = 354,
+    this.height = 59,
     this.keyboardType = TextInputType.text,
     this.isPassword = false,
     this.spacing = 10.0,
@@ -28,8 +31,8 @@ class _CustomInputState extends State<CustomInput> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          width: 354,
-          height: 59,
+          width: widget.width,
+          height: widget.height,
           decoration: BoxDecoration(
             color: Color(0xFFEDEDED),
             borderRadius: BorderRadius.circular(10),
@@ -45,7 +48,7 @@ class _CustomInputState extends State<CustomInput> {
             decoration: InputDecoration(
               hintText: widget.hintText,
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                  EdgeInsets.symmetric(horizontal: 10, vertical: 18),
               border: InputBorder.none,
               hintStyle: TextStyle(
                 fontSize: 15,

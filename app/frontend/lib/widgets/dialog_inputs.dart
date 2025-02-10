@@ -34,10 +34,12 @@ class DialogInputs extends StatelessWidget {
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
                         title,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.normal,
-                            color: Color(0xFF060606)),
+                          fontSize: 24,
+                          fontWeight: FontWeight.normal,
+                          color: Color(0xFF060606),
+                        ),
                       ),
                     ),
                     child,

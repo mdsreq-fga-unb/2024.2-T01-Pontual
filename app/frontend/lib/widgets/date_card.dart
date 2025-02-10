@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateCardComponent extends StatelessWidget {
-  final int focusCard;
+  final int? focusCard;
+  final int indexSubtract;
   final void Function(int) setFocusCard;
   final void Function(DateTime) setDatetimeCard;
 
@@ -23,11 +24,11 @@ class DateCardComponent extends StatelessWidget {
   DateCardComponent(
       {required this.focusCard,
       required this.setFocusCard,
-      required this.setDatetimeCard});
+      required this.setDatetimeCard,
+      this.indexSubtract = 2});
 
   List<DateTime> getWeekDays(DateTime date) {
-    // Pega o primeiro dia da semana (segunda-feira)
-    DateTime firstDayOfWeek = date.subtract(Duration(days: 2));
+    DateTime firstDayOfWeek = date.subtract(Duration(days: indexSubtract));
     return List.generate(
         5, (index) => firstDayOfWeek.add(Duration(days: index)));
   }
@@ -35,7 +36,7 @@ class DateCardComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<DateTime> weekDates = getWeekDays(today);
-    int start = today.weekday;
+    int start = today.weekday - (indexSubtract - 2);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -44,12 +45,13 @@ class DateCardComponent extends StatelessWidget {
         String day = daysOfWeek[(index + start) % 7];
         String date = DateFormat('d').format(currentDate);
 
-        return _dateCard(day, date, index, currentDate);
+        return _dateCard(context, day, date, index, currentDate);
       }),
     );
   }
 
-  Widget _dateCard(String day, String date, int index, DateTime datetime) {
+  Widget _dateCard(BuildContext context, String day, String date, int index,
+      DateTime datetime) {
     bool isSelected = (focusCard == index);
 
     return GestureDetector(
@@ -58,10 +60,11 @@ class DateCardComponent extends StatelessWidget {
         setDatetimeCard(datetime);
       },
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        width: MediaQuery.of(context).size.width > 380 ? 66 : 56,
+        height: 62,
         decoration: BoxDecoration(
-          color: (isSelected) ? Colors.grey[400] : Colors.white,
-          borderRadius: BorderRadius.circular(8),
+          color: (isSelected) ? Color(0xFFBEBABA) : Color(0xFFD9D9D9),
+          borderRadius: BorderRadius.circular(15),
           boxShadow: [
             if (!isSelected)
               BoxShadow(
@@ -72,15 +75,23 @@ class DateCardComponent extends StatelessWidget {
           ],
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               day,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 16,
+                color: Color(0xFF445668),
+                fontWeight: FontWeight.normal,
+              ),
             ),
-            SizedBox(height: 4),
             Text(
               date,
-              style: TextStyle(fontSize: 14),
+              style: TextStyle(
+                fontSize: 22,
+                color: Colors.black,
+                fontWeight: FontWeight.normal,
+              ),
             ),
           ],
         ),

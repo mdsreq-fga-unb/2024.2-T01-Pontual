@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:frontend/utils/dialog_functions.dart';
 
 class DialogOptions extends StatelessWidget {
-  const DialogOptions({super.key});
+  final void Function() updateClasses;
+  final void Function() updateVIP;
+
+  const DialogOptions({super.key, required this.updateClasses, required this.updateVIP});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,8 @@ class DialogOptions extends StatelessWidget {
                         ),
                       ),
                       child: TextButton(
-                        onPressed: () => showDialogReposicao(context),
+                        onPressed: () =>
+                            showDialogReposicao(context, updateClasses),
                         child: Text(
                           "Turma de Reposição",
                           style: TextStyle(
@@ -62,9 +66,9 @@ class DialogOptions extends StatelessWidget {
                         ),
                       ),
                       child: TextButton(
-                        onPressed: () => showDialogVip(context),
+                        onPressed: () => showDialogVip(context, updateVIP),
                         child: Text(
-                          "Turma de VIP",
+                          "Turma VIP",
                           style: TextStyle(
                               color: Color(0xFF407FC8),
                               fontSize: 14,
