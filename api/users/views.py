@@ -1,9 +1,10 @@
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import request, response, views, permissions, status, exceptions
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt import tokens
+from rest_framework.views import APIView
 from users import models, serializers
 
 
@@ -22,10 +23,10 @@ class Manage(views.APIView):
     def post(self, request, *args, **kwargs):
         serializer = serializers.ManageUserSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.update(serializer.validated_data)
+            user = serializer.update(serializer.validated_data)
 
         data = {
-            'message': 'User Active'
+            'message': 'User Active' if user.is_active else 'User Inactive'
         }
         data.update(serializer.validated_data)
 
@@ -44,7 +45,7 @@ class RefreshTokenTreats():
             response.set_cookie(key="refresh", value=refresh_token,
                                 max_age=jwt_settings["REFRESH_TOKEN_LIFETIME"],
                                 secure=jwt_settings["REFRESH_TOKEN_SECURE"],
-                                httponly=True, samesite="Lax")
+                                httponly=True, samesite="None")
 
         return response
 
@@ -90,5 +91,44 @@ class Refresh(TokenRefreshView, RefreshTokenTreats):
 
         response.data['name'] = user.name
         response.data['email'] = user.email
+        response.data['uuid'] = user.uuid
+        response.data['is_staff'] = user.is_staff
 
         return self.handle_mobile_or_desktop(request, response)
+
+
+class UsersView(APIView):
+    permission_classes = [permissions.IsAdminUser]
+
+    def get(self, request, uuid=None):
+        if uuid:
+            user = get_object_or_404(models.User, uuid=uuid)
+            serializer = serializers.UserGetUniqueSerializer(user)
+
+            return response.Response(status=status.HTTP_200_OK, data=serializer.data)
+
+        users = models.User.objects.filter(is_staff=False)
+        serializer = serializers.UserGetSerializer(users, many=True)
+
+        return response.Response(status=status.HTTP_200_OK, data=serializer.data)
+
+
+class PasswordChange(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        serializer = serializers.PasswordChangeSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.update(request.user, serializer.validated_data)
+
+        return response.Response(status=status.HTTP_200_OK, data=serializer.data)
+
+
+class Logout(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        result = response.Response(status=status.HTTP_200_OK)
+        result.delete_cookie('refresh')
+
+        return result
