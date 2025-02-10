@@ -31,14 +31,27 @@ class StatusHandler extends ApiHandler {
     }
   }
 
-  Future<dynamic> leave(int id, DateTime registerStart, DateTime registerEnd,
-      String access) async {
-    final body = {
-      "register": [
-        registerStart.toIso8601String(),
-        registerEnd.toIso8601String()
-      ]
-    };
+  Future<dynamic> patch(int id, DateTime? registerStart, DateTime? registerEnd,
+      String? notes, String access) async {
+    dynamic body;
+
+    if (registerStart == null && registerEnd == null) {
+      body = {"notes": notes == null ? "" : notes.toLowerCase()};
+    } else if (registerStart != null && registerEnd == null) {
+      body = {
+        "notes": notes == null ? "" : notes.toLowerCase(),
+        "register": [registerStart.toIso8601String()]
+      };
+    } else if (registerStart != null && registerEnd != null) {
+      body = {
+        "notes": notes == null ? "" : notes.toLowerCase(),
+        "register": [
+          registerStart.toIso8601String(),
+          registerEnd.toIso8601String()
+        ]
+      };
+    }
+
     http.Response response;
 
     headers["Authorization"] = "Bearer $access";
@@ -75,6 +88,51 @@ class StatusHandler extends ApiHandler {
     }
 
     if (response.statusCode == HttpStatus.created) {
+      return json.decode(response.body);
+    } else {
+      throw ErrorDescription("Houve um erro, tente novamente mais tarde!");
+    }
+  }
+
+  Future<dynamic> post(String? uuid, int? classy, String kind, DateTime start,
+      DateTime end, String access) async {
+    final body = {
+      "kind": kind,
+      "user": uuid,
+      "classy": classy,
+      "expected": [start.toIso8601String(), end.toIso8601String()]
+    };
+    http.Response response;
+
+    headers["Authorization"] = "Bearer $access";
+    try {
+      response = await client.post(Uri.parse('${url}api/status/'),
+          headers: headers, body: json.encode(body));
+    } catch (e) {
+      throw ErrorDescription("Houve um erro, tente novamente mais tarde!");
+    }
+
+    if (response.statusCode == HttpStatus.created) {
+      return json.decode(response.body);
+    } else {
+      throw ErrorDescription("Houve um erro, tente novamente mais tarde!");
+    }
+  }
+
+  Future<dynamic> getByRange(String start, String end, String access,
+      {String? tp, int? at}) async {
+    http.Response response;
+
+    headers["Authorization"] = "Bearer $access";
+    try {
+      response = await client.get(
+          Uri.parse('${url}api/status/$start/$end/?${tp != null ? (at != null ? "tp=$tp&" : "tp=$tp") : ""}${at != null ? "at=$at" : ""}'),
+          headers: headers);
+    } catch (e) {
+      throw ErrorDescription("Houve um erro, tente novamente mais tarde!");
+    }
+
+    if (response.statusCode == HttpStatus.ok) {
       return json.decode(response.body);
     } else {
       throw ErrorDescription("Houve um erro, tente novamente mais tarde!");

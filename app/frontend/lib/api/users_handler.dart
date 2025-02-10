@@ -62,4 +62,97 @@ class UsersHandler extends ApiHandler {
       throw Error();
     }
   }
+
+  Future<dynamic> get(String access) async {
+    http.Response response;
+
+    headers["Authorization"] = "Bearer $access";
+    try {
+      response = await client.get(Uri.parse('${url}users/'), headers: headers);
+    } catch (e) {
+      throw Error();
+    }
+
+    if (response.statusCode == HttpStatus.ok) {
+      return json.decode(response.body);
+    } else {
+      throw Error();
+    }
+  }
+
+  Future<dynamic> activate(String access, String email) async {
+    final body = {'email': email};
+    http.Response response;
+
+    headers["Authorization"] = "Bearer $access";
+    try {
+      response = await client.post(Uri.parse('${url}users/manage/'),
+          headers: headers, body: json.encode(body));
+    } catch (e) {
+      throw Error();
+    }
+
+    if (response.statusCode == HttpStatus.ok) {
+      return json.decode(response.body);
+    } else {
+      throw Error();
+    }
+  }
+
+  Future<dynamic> info(String access, String uuid) async {
+    http.Response response;
+
+    headers["Authorization"] = "Bearer $access";
+    try {
+      response =
+          await client.get(Uri.parse('${url}users/$uuid/'), headers: headers);
+    } catch (e) {
+      throw Error();
+    }
+
+    if (response.statusCode == HttpStatus.ok) {
+      return json.decode(response.body);
+    } else {
+      throw Error();
+    }
+  }
+
+  Future<dynamic> password(String access, String password) async {
+    final body = {'password': password};
+    http.Response response;
+
+    headers["Authorization"] = "Bearer $access";
+    try {
+      response = await client.patch(Uri.parse('${url}users/password/'),
+          headers: headers, body: json.encode(body));
+    } catch (e) {
+      throw Error();
+    }
+
+    if (response.statusCode == HttpStatus.ok) {
+      return json.decode(response.body);
+    } else {
+      throw Error();
+    }
+  }
+
+  Future<dynamic> logout(String access) async {
+    http.Response response;
+
+    headers["Authorization"] = "Bearer $access";
+    try {
+      response = await client.get(
+        Uri.parse('${url}users/logout/'),
+        headers: headers,
+      );
+    } catch (e) {
+      throw Error();
+    }
+
+    if (response.statusCode == HttpStatus.ok) {
+      return {};
+    } else {
+      throw Error();
+    }
+  }
 }
