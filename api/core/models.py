@@ -126,47 +126,32 @@ class Status(models.Model):
         super().save(*args, **kwargs)
 
 
-class Message(models.Model):
-    title = models.CharField(
-        blank=False, null=False,
-        max_length=64
-    )
-    message = models.CharField(
-        blank=False, null=False,
-        max_length=244
-    )
-
-
 class Notification(models.Model):
-    STATUS = [
-        ('sent', 'SENT'),
-        ('awaiting', 'AWAITING')
-    ]
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="notifications")
+    endpoint = models.URLField(blank=False, null=False)
+    p256dh = models.CharField(blank=False, null=False, max_length=256)
+    auth = models.CharField(blank=False, null=False, max_length=256)
 
-    message = models.ForeignKey(Message, on_delete=models.CASCADE)
-    status = models.CharField(
-        blank=False, null=False,
-        choices=STATUS, max_length=9
-    )
-    created_at = models.DateTimeField(
-        blank=False, null=False,
-        default=timezone.now
-    )
-    destination = models.DateTimeField(
-        blank=False, null=False,
-        default=timezone.now
-    )
-    classy = models.ForeignKey(
-        Class, on_delete=models.CASCADE,
-        blank=True, null=True
-    )
-    sender = models.ForeignKey(
-        User, on_delete=models.PROTECT,
-        blank=False, null=False,
-        related_name='sent_notifications'
-    )
-    receiver = models.ForeignKey(
-        User, on_delete=models.PROTECT,
-        blank=False, null=False,
-        related_name='received_notifications'
-    )
+
+class Message(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="messages")
+    message = models.CharField(blank=False, null=False, max_length=512)
+    created_at = models.DateTimeField(auto_now_add=True)
+    checked = models.BooleanField(default=False)
+
+
+class Report(models.Model):
+    report = models.JSONField(default=dict)
+    reviewed = models.BooleanField(default=False)
+    to_review = models.BooleanField(default=False)
+    end = models.DateTimeField(blank=False, null=False)
+    start = models.DateTimeField(blank=False, null=False)
+    absences = models.IntegerField(blank=False, null=False)
+    total_minutes = models.IntegerField(blank=False, null=False)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="reports")
+
+    def __str__(self):
+        return f"Relatório de {self.user.username} ({self.start} - {self.end})"
