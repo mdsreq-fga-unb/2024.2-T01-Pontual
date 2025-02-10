@@ -1,5 +1,7 @@
-// import 'package:frontend/screen/home_page.dart';
+import 'package:frontend/api/notification_handler.dart';
+import 'package:frontend/screen/admin/admin_home.dart';
 import 'package:frontend/screen/home_page.dart';
+import 'package:frontend/utils/push_service.dart';
 import 'package:frontend/widgets/checkbox_default.dart';
 import 'package:frontend/utils/user_provider.dart';
 import 'package:frontend/api/users_handler.dart';
@@ -17,6 +19,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isAuthenticated = context.watch<UserProvider>().isAuthenticated;
+    final isAdmin = context.watch<UserProvider>().isAdmin;
 
     bool? rememberMe = false;
 
@@ -24,7 +27,9 @@ class LoginScreen extends StatelessWidget {
       if (isAuthenticated) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(
+            builder: (context) => isAdmin ? AdminHome() : HomePage(),
+          ),
         );
       }
     });
@@ -52,7 +57,7 @@ class LoginScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.topCenter,
                     child: SvgPicture.asset(
-                      'images/logo150x150.svg',
+                      'assets/images/logo150x150.svg',
                       width: isWideScreen ? 200 : 150,
                       height: isWideScreen ? 200 : 150,
                     ),
@@ -109,9 +114,9 @@ class LoginScreen extends StatelessWidget {
                             Text(
                               'Lembre-se de mim',
                               style: TextStyle(
-                                fontFamily: 'Montserrat',
+                                fontFamily: 'Inter',
                                 fontSize: isWideScreen ? 16 : 15,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.normal,
                                 color: Color(0xFF757474),
                               ),
                             ),
@@ -120,20 +125,20 @@ class LoginScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                // LÓGICA PARA SENHA ESQUECIDA
-                              },
-                              child: Text(
-                                'Esqueceu a senha?',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: isWideScreen ? 16 : 15,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xFFF08484),
-                                ),
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     // LÓGICA PARA SENHA ESQUECIDA
+                            //   },
+                            //   child: Text(
+                            //     'Esqueceu a senha?',
+                            //     style: TextStyle(
+                            //       fontFamily: 'Montserrat',
+                            //       fontSize: isWideScreen ? 16 : 15,
+                            //       fontWeight: FontWeight.w400,
+                            //       color: Color(0xFFF08484),
+                            //     ),
+                            //   ),
+                            // ),
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context)
@@ -142,9 +147,9 @@ class LoginScreen extends StatelessWidget {
                               child: Text(
                                 'Crie sua conta',
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
+                                  fontFamily: 'Inter',
                                   fontSize: isWideScreen ? 16 : 15,
-                                  fontWeight: FontWeight.w400,
+                                  fontWeight: FontWeight.normal,
                                   color: Color(0xFFF08484),
                                 ),
                               ),
@@ -159,11 +164,29 @@ class LoginScreen extends StatelessWidget {
                     text: 'Login',
                     onPressed: () {
                       UsersHandler()
-                          .login(emailController.text, passwordController.text, rememberMe)
+                          .login(emailController.text, passwordController.text,
+                              rememberMe)
                           .then((value) {
                         context.read<UserProvider>().login(
-                            value['email'], value['name'], value['access']);
+                            value['email'],
+                            value['name'],
+                            value['access'],
+                            value['uuid'],
+                            value['is_staff']);
                         Navigator.of(context).pushNamed(AppRoutes.Home);
+                        if (!context.read<UserProvider>().isAdmin &&
+                            (rememberMe != null && rememberMe!)) {
+                          subscribeUser(
+                            "BLagAyHodIwY5MaQUqzdbFGHFjnyRKvKGnO7MOPVHHTQAS78372Ex1j_QYSVtEacqDEEeuOH6OH1b1F0RG15zRA",
+                          ).then((value) {
+                            NotificationHandler()
+                                .subscribe(
+                                    context.read<UserProvider>().accessToken,
+                                    value)
+                                .then((value) {})
+                                .catchError((error) {});
+                          }).catchError((error) {});
+                        }
                       }).catchError((error) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

@@ -161,7 +161,6 @@ class RegisterScreen extends StatelessWidget {
                               backgroundColor: Colors.lightGreen,
                             ),
                           );
-                          print(value);
                         }).catchError((error) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
